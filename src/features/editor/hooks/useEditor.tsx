@@ -1,5 +1,19 @@
-import { useCallback } from "react";
-import { Canvas, InteractiveFabricObject, Rect, Shadow } from 'fabric';
+import { useCallback, useState } from "react";
+import { Canvas, FabricObject, InteractiveFabricObject, Rect, Shadow } from 'fabric';
+import useAutoResize from "./useAutoResize";
+
+declare module 'fabric' {
+    interface FabricObject {
+        name?: string;
+        id?: string;
+    }
+    interface SerializedObjectProps {
+        name?: string;
+        id?: string;
+    }
+}
+
+FabricObject.customProperties = ['name'];
 
 export interface InitEditorProps {
     initialContainer: HTMLDivElement;
@@ -7,8 +21,13 @@ export interface InitEditorProps {
 };
 
 const useEditor = () => {
+    const [canvas, setCanvas] = useState<Canvas | null>(null);
+    const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
+    useAutoResize({ canvas, container });
+
     const init = useCallback(({ initialContainer, initialCanvas }: InitEditorProps) => {
-        // added custom control classes
+        // added custom control classes 
         InteractiveFabricObject.ownDefaults = {
             ...InteractiveFabricObject.ownDefaults,
             cornerStyle: 'circle',
@@ -22,16 +41,16 @@ const useEditor = () => {
         };
 
         const initialWorkspace = new Rect({
+            name: 'clip',
             width: 900,
             height: 1200,
-            name: 'clip',
             fill: 'white',
             selectable: false,
             hasControls: false,
             shadow: new Shadow({
                 color: 'rgba(0,0,0,0.8)',
                 blur: 5
-            })
+            }),
         });
 
         initialCanvas.setDimensions({
@@ -42,6 +61,9 @@ const useEditor = () => {
         initialCanvas.add(initialWorkspace);
         initialCanvas.centerObject(initialWorkspace);
         initialCanvas.clipPath = initialWorkspace;
+
+        setCanvas(initialCanvas);
+        setContainer(initialContainer);
 
         const test = new Rect({
             width: 200,
