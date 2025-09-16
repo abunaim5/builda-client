@@ -2,6 +2,8 @@
 import { useEffect, useRef } from "react";
 import useEditor from "../hooks/useEditor";
 import { Canvas } from "fabric";
+import Navbar from "./navbar";
+import Sidebar from "./sidebar";
 
 const Editor = () => {
     const { init } = useEditor();
@@ -11,13 +13,13 @@ const Editor = () => {
     const fabricCanvasRef = useRef<Canvas | null>(null);
 
     useEffect(() => {
-        if(!fabricCanvasRef || !canvasRef.current || !containerRef.current) return;
+        if (!fabricCanvasRef || !canvasRef.current || !containerRef.current) return;
 
         const options = {
             controlsAboveOverlay: true,
             preserveObjectStacking: true
         };
-        
+
         fabricCanvasRef.current = new Canvas(canvasRef.current, options);
 
         init({
@@ -27,7 +29,7 @@ const Editor = () => {
 
         // cleanup function
         return () => {
-            if(fabricCanvasRef.current) {
+            if (fabricCanvasRef.current) {
                 fabricCanvasRef.current.dispose();
                 fabricCanvasRef.current = null;
             }
@@ -37,8 +39,14 @@ const Editor = () => {
 
     return (
         <div className='h-full flex flex-col'>
-            <div className='flex-1 h-full bg-muted' ref={containerRef}>
-                <canvas ref={canvasRef} />
+            <Navbar />
+            <div className='absolute w-full h-[calc(100vh-56px)] flex top-14'>
+                <Sidebar />
+                <main className='w-full relative flex flex-col overflow-auto bg-[#0D1216]'>
+                    <div className='flex-1 h-full bg-[#0D1216]' ref={containerRef}>
+                        <canvas ref={canvasRef} />
+                    </div>
+                </main>
             </div>
         </div>
     );
