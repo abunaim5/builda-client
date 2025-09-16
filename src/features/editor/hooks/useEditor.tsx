@@ -13,7 +13,7 @@ declare module 'fabric' {
     }
 }
 
-FabricObject.customProperties = ['name'];
+FabricObject.customProperties = ['name', 'id'];
 
 export interface InitEditorProps {
     initialContainer: HTMLDivElement;

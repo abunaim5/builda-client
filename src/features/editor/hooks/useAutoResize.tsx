@@ -1,4 +1,4 @@
-import { Canvas, CanvasEvents, iMatrix, Point, TMat2D, util } from "fabric";
+import { Canvas, iMatrix, Point, Rect, util } from "fabric";
 import { useCallback, useEffect } from "react";
 
 interface AutoResizeProps {
@@ -7,7 +7,7 @@ interface AutoResizeProps {
 }
 
 const useAutoResize = ({ canvas, container }: AutoResizeProps) => {
-    const autoZoom = useCallback(() => {
+    const autoZoom = useCallback(async () => {
         if (!canvas || !container) return;
 
         const width = container.offsetWidth;
@@ -18,7 +18,7 @@ const useAutoResize = ({ canvas, container }: AutoResizeProps) => {
             height: height
         });
 
-        const center: CanvasEvents = canvas.getCenterPoint();
+        const center = canvas.getCenterPoint();
         const zoomRatio = 0.85;
         const localWorkspace = canvas.getObjects().find((object) => object.name === 'clip');
 
@@ -29,9 +29,24 @@ const useAutoResize = ({ canvas, container }: AutoResizeProps) => {
             height: height
         });
         const zoom = zoomRatio * scale;
-        console.log(iMatrix.concat() as TMat2D);
-        canvas.setViewportTransform(iMatrix.concat() as TMat2D);
-        // canvas.zoomToPoint(new Point(center.left, center.top), zoom);
+        canvas.setViewportTransform(iMatrix);
+        canvas.zoomToPoint(new Point(center), zoom);
+
+        const workspaceCenter = localWorkspace.getCenterPoint();
+        const viewportTransform = canvas.viewportTransform;
+
+        if (canvas.width === undefined || canvas.height === undefined || !viewportTransform) return;
+
+        // calculate the position of canvas
+        viewportTransform[4] = canvas.width / 2 - workspaceCenter.x * viewportTransform[0];
+        viewportTransform[5] = canvas.height / 2 - workspaceCenter.y * viewportTransform[3];
+
+        canvas.setViewportTransform(viewportTransform);
+
+        const clonedWorkspace = await localWorkspace.clone();
+        // clipping canvas for new workspace
+        canvas.clipPath = clonedWorkspace as Rect;
+        canvas.renderAll();
 
     }, [canvas, container]);
 
@@ -46,10 +61,9 @@ const useAutoResize = ({ canvas, container }: AutoResizeProps) => {
             resizeObserver.observe(container);
         };
 
+        // need to disconnect observer
         return () => {
-            if (resizeObserver) {
-                resizeObserver.disconnect();
-            }
+            if (resizeObserver) resizeObserver.disconnect();
         };
     }, [canvas, container, autoZoom]);
 };
