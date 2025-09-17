@@ -4,6 +4,8 @@ import useEditor from "../hooks/useEditor";
 import { Canvas } from "fabric";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
+import Toolbar from "./toolbar";
+import Footer from "./footer";
 
 const Editor = () => {
     const { init } = useEditor();
@@ -42,10 +44,12 @@ const Editor = () => {
             <Navbar />
             <div className='absolute w-full h-[calc(100vh-56px)] flex top-14'>
                 <Sidebar />
-                <main className='w-full relative flex flex-col overflow-auto bg-[#0D1216]'>
-                    <div className='flex-1 h-full bg-[#0D1216]' ref={containerRef}>
+                <main className='w-full relative flex flex-col flex-1 overflow-auto bg-[#0D1216]'>
+                    <Toolbar />
+                    <div className='flex-1 h-[calc(100vh-100px)] bg-[#0D1216]' ref={containerRef}>
                         <canvas ref={canvasRef} />
                     </div>
+                    <Footer />
                 </main>
             </div>
         </div>
