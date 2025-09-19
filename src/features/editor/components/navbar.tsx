@@ -1,6 +1,11 @@
 'use client';
-import { CloudCheck, CloudUpload, MousePointerClick, Pencil, Redo2, Share, SquarePlus, Undo2 } from "lucide-react";
+import { CloudUpload, Download, MousePointerClick, Pencil, Redo2, SquarePen, Undo2 } from "lucide-react";
+import { BsCloudCheck } from "react-icons/bs";
 import Logo from "./logo";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AutoResizeInput from "@/components/custom/auto-resize-input";
+import CustomTooltip from "@/components/custom/custom-tooltip";
+import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -11,9 +16,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import AutoResizeInput from "@/components/custom/auto-resize-input";
 
 const Navbar = () => {
     return (
@@ -28,42 +30,71 @@ const Navbar = () => {
                         <DropdownMenuContent className="min-w-60" align="start">
                             <DropdownMenuLabel>
                                 <div className='flex text-base items-center gap-x-2'>
-                                    Rename project <Pencil size={16} />
+                                    Rename project <Pencil className='size-5' />
                                 </div>
                                 <span className='text-xs font-normal text-muted-foreground select-none'>Logo By Abu Naim</span>
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuGroup>
                                 <DropdownMenuItem>
-                                    <SquarePlus size={32} /> <span>Create new design</span>
+                                    <SquarePen className='size-5' /> <span>Create new design</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
-                                    <CloudUpload size={32} /> <span>Upload JSON files</span>
+                                    <CloudUpload className='size-5' /> <span>Upload JSON files</span>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <Separator orientation='vertical' className='mx-2' />
-                    <Button variant='ghost' size='icon' className=''>
-                        <MousePointerClick size={16} />
-                    </Button>
-                    <Button variant='ghost' size='icon' className=''>
-                        <Undo2 size={16} />
-                    </Button>
-                    <Button variant='ghost' size='icon' className=''>
-                        <Redo2 size={16} />
-                    </Button>
+                    <CustomTooltip label='Select'>
+                        <Button variant='ghost' size='icon' className=''>
+                            <MousePointerClick className='size-5' />
+                        </Button>
+                    </CustomTooltip>
+                    <CustomTooltip label='Undo'>
+                        <Button variant='ghost' size='icon' className=''>
+                            <Undo2 className='size-5' />
+                        </Button>
+                    </CustomTooltip>
+                    <CustomTooltip label='Redo'>
+                        <Button variant='ghost' size='icon' className=''>
+                            <Redo2 className='size-5' />
+                        </Button>
+                    </CustomTooltip>
                     <Separator orientation='vertical' className='mx-2' />
-                    <Button variant='ghost' size='icon' className=''>
-                        <CloudCheck size={16} />
-                    </Button>
+                    <div className='flex items-center gap-2 ml-2 text-muted-foreground'>
+                        <BsCloudCheck className='size-5' />
+                        <span className='text-sm'>Saved</span>
+                    </div>
                 </div>
             </div>
             <div className='flex items-center gap-x-2'>
                 <AutoResizeInput initialValue='Builda' placeholder='Untitled design' className='border-none shadow-none focus-visible:ring-1 font-semibold' />
-                <Button variant='outline' className='shadow-none'>
-                    <Share /> <span>Import</span>
-                </Button>
+                <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant='outline' className='shadow-none'>
+                            <Download className='size-5' /> <span>Export</span>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className='min-w-72' align='center'>
+                        <DropdownMenuLabel>
+                            <p className='flex text-base items-center gap-x-2'>
+                                Download
+                            </p>
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem>
+                                PDF
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <Button variant='destructive' className='shadow-none w-full'>
+                                    Download
+                                </Button>
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu>
                 <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                     <AvatarFallback>CN</AvatarFallback>

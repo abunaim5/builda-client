@@ -44,9 +44,9 @@ const Editor = () => {
             <Navbar />
             <div className='absolute w-full h-[calc(100vh-56px)] flex top-14'>
                 <Sidebar />
-                <main className='w-full relative flex flex-col flex-1 overflow-auto bg-[#0D1216]'>
+                <main className='w-full relative flex flex-col flex-1 overflow-auto bg-muted'>
                     <Toolbar />
-                    <div className='flex-1 h-[calc(100vh-100px)] bg-[#0D1216]' ref={containerRef}>
+                    <div className='flex-1 h-[calc(100vh-100px)] bg-muted' ref={containerRef}>
                         <canvas ref={canvasRef} />
                     </div>
                     <Footer />
