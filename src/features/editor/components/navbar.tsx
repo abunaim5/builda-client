@@ -16,8 +16,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { ActiveTool } from "@/types/types";
+import { cn } from "@/lib/utils";
+import { CiExport } from "react-icons/ci";
+import { FaCrown } from "react-icons/fa";
 
-const Navbar = () => {
+interface NavbarProps {
+    activeTool: ActiveTool;
+    onchangeActiveTool: (tool: ActiveTool) => void;
+}
+
+const Navbar = ({ activeTool, onchangeActiveTool }: NavbarProps) => {
     return (
         <nav className='w-full h-14 flex items-center justify-between py-2 px-4 lg:px-6 border-b gap-x-8'>
             <div className='h-full flex items-center gap-x-8'>
@@ -47,7 +56,7 @@ const Navbar = () => {
                     </DropdownMenu>
                     <Separator orientation='vertical' className='mx-2' />
                     <CustomTooltip label='Select'>
-                        <Button variant='ghost' size='icon' className=''>
+                        <Button variant='ghost' size='icon' className={cn(activeTool === 'select' && 'bg-muted text-[#5BD0F4]')} onClick={() => onchangeActiveTool('select')}>
                             <MousePointerClick className='size-5' />
                         </Button>
                     </CustomTooltip>
@@ -70,10 +79,13 @@ const Navbar = () => {
             </div>
             <div className='flex items-center gap-x-2'>
                 <AutoResizeInput initialValue='Builda' placeholder='Untitled design' className='border-none shadow-none focus-visible:ring-1 font-semibold' />
+                <Button variant='outline' className='shadow-none'>
+                    <FaCrown className='size-4 text-[#FDBC68]' /> <span>Go Pro</span>
+                </Button>
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <Button variant='outline' className='shadow-none'>
-                            <Download className='size-5' /> <span>Export</span>
+                            <CiExport className='size-5 stroke-1' /> <span>Share</span>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='min-w-72' align='center'>

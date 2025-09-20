@@ -7,18 +7,19 @@ import Sidebar from "./sidebar";
 import Toolbar from "./toolbar";
 import Footer from "./footer";
 import { ActiveTool } from "@/types/types";
+import ShapeSidebar from "./shape-sidebar";
 
 const Editor = () => {
     const { init } = useEditor();
     const [activeTool, setActiveTool] = useState<ActiveTool>('select');
     const onChangeActiveTool = useCallback((tool: ActiveTool) => {
-        if(tool === activeTool) {
+        if (tool === activeTool) {
             return setActiveTool('select');
         }
 
         setActiveTool(tool);
     }, [activeTool]);
-    
+
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const fabricCanvasRef = useRef<Canvas | null>(null);
@@ -50,9 +51,10 @@ const Editor = () => {
 
     return (
         <div className='h-full flex flex-col'>
-            <Navbar />
+            <Navbar activeTool={activeTool} onchangeActiveTool={onChangeActiveTool} />
             <div className='absolute w-full h-[calc(100vh-56px)] flex top-14'>
-                <Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool}/>
+                <Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+                <ShapeSidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
                 <main className='relative flex flex-col flex-1 overflow-auto bg-muted'>
                     <Toolbar />
                     <div className='flex-1 h-[calc(100vh-100px)] bg-muted' ref={containerRef}>
