@@ -1,10 +1,13 @@
 'use client';
 import { CloudUpload, Download, MousePointerClick, Pencil, Redo2, SquarePen, Undo2 } from "lucide-react";
 import { BsCloudCheck } from "react-icons/bs";
+import { CiExport } from "react-icons/ci";
+import { FaCrown } from "react-icons/fa";
 import Logo from "./logo";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ActiveTool } from "@/types/types";
 import AutoResizeInput from "@/components/custom/auto-resize-input";
 import CustomTooltip from "@/components/custom/custom-tooltip";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button"
 import {
@@ -16,10 +19,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ActiveTool } from "@/types/types";
 import { cn } from "@/lib/utils";
-import { CiExport } from "react-icons/ci";
-import { FaCrown } from "react-icons/fa";
 
 interface NavbarProps {
     activeTool: ActiveTool;

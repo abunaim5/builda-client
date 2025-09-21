@@ -1,4 +1,5 @@
-import SidebarClose from "@/components/custom/sidebar-close";
+import ToolSidebarClose from "@/components/custom/tool-sidebar-close";
+import ToolSidebarHeader from "@/components/custom/tool-sidebar-header";
 import { cn } from "@/lib/utils";
 import { ActiveTool } from "@/types/types";
 
@@ -8,13 +9,15 @@ interface ShapeSidebarProps {
 };
 
 const ShapeSidebar = ({ activeTool, onChangeActiveTool }: ShapeSidebarProps) => {
-    const onClick = () => {
+    const onClose = () => {
         onChangeActiveTool('select');
     };
 
     return (
         <aside className={cn('w-[360px] relative', activeTool === 'shapes' ? 'visible' : 'hidden')}>
-            <SidebarClose onClick={onClick} />
+            <ToolSidebarHeader title='Shapes' description='Add shapes in canvas' />
+
+            <ToolSidebarClose onClick={onClose} />
         </aside>
     );
 };
