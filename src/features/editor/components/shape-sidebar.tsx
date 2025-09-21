@@ -30,14 +30,14 @@ const ShapeSidebar = ({ activeTool, editor, onChangeActiveTool }: ShapeSidebarPr
                     <ShapeTool onClick={() => editor?.addRoundRectangle()} icon={FaSquare} />
                     <ShapeTool onClick={() => editor?.addCircle()} icon={FaCircle} />
                     <ShapeTool onClick={() => editor?.addTriangle()} icon={IoTriangleSharp} />
-                    <ShapeTool onClick={() => { }} icon={IoTriangleSharp} iconClassName='rotate-180' />
-                    <ShapeTool onClick={() => { }} icon={MdSquare} iconClassName='rotate-45' />
-                    <ShapeTool onClick={() => { }} icon={RiPentagonFill} />
-                    <ShapeTool onClick={() => { }} icon={RiHexagonFill} iconClassName='rotate-90' />
-                    <ShapeTool onClick={() => { }} icon={RiHexagonFill} />
-                    <ShapeTool onClick={() => { }} icon={IoStarSharp} />
-                    <ShapeTool onClick={() => { }} icon={ImArrowRight} />
-                    <ShapeTool onClick={() => { }} icon={ImArrowLeft} />
+                    <ShapeTool onClick={() => editor?.addInverseTriangle()} icon={IoTriangleSharp} iconClassName='rotate-180' />
+                    <ShapeTool onClick={() => editor?.addDiamond()} icon={MdSquare} iconClassName='rotate-45' />
+                    <ShapeTool onClick={() => editor?.addPentagon()} icon={RiPentagonFill} />
+                    <ShapeTool onClick={() => editor?.addHexagon()} icon={RiHexagonFill} iconClassName='rotate-90' />
+                    <ShapeTool onClick={() => editor?.addHexagonHorizontal()} icon={RiHexagonFill} />
+                    <ShapeTool onClick={() => editor?.addStar()} icon={IoStarSharp} />
+                    <ShapeTool onClick={() => editor?.addArrowRight()} icon={ImArrowRight} />
+                    <ShapeTool onClick={() => editor?.addArrowLeft()} icon={ImArrowLeft} />
                 </div>
             </ScrollArea>
             <ToolSidebarClose onClick={onClose} />

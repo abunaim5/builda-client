@@ -23,7 +23,31 @@ export const RectangleOptions = {
     angle: 0,
 };
 
+export const DiamondOptions = {
+    width: 425,
+    height: 425,
+    left: 100,
+    top: 100,
+    radius: 150,
+    fill: FillColor,
+    stroke: StrokeColor,
+    strokeWidth: StrokeWidth,
+    angle: 0,
+};
+
 export const TriangleOptions = {
+    width: 300,
+    height: 300,
+    left: 100,
+    top: 100,
+    radius: 150,
+    fill: FillColor,
+    stroke: StrokeColor,
+    strokeWidth: StrokeWidth,
+    angle: 0,
+};
+
+export const PentagonOptions = {
     width: 300,
     height: 300,
     left: 100,

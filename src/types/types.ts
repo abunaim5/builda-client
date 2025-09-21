@@ -26,4 +26,12 @@ export interface Editor {
     addRectangle: () => void;
     addRoundRectangle: () => void;
     addTriangle: () => void;
+    addInverseTriangle: () => void;
+    addDiamond: () => void;
+    addPentagon: () => void;
+    addHexagon: () => void;
+    addHexagonHorizontal: () => void;
+    addStar: () => void;
+    addArrowRight: () => void;
+    addArrowLeft: () => void;
 };

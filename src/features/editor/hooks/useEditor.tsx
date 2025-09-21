@@ -1,8 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
-import { Canvas, Circle, FabricObject, InteractiveFabricObject, Object, Rect, Shadow, Triangle } from 'fabric';
+import { Canvas, Circle, FabricObject, InteractiveFabricObject, Object, Polygon, Rect, Shadow, Triangle } from 'fabric';
 import { BuildEditorProps, Editor } from "@/types/types";
-import { CircleOptions, RectangleOptions, TriangleOptions } from "@/constants/constants";
+import { CircleOptions, DiamondOptions, PentagonOptions, RectangleOptions, TriangleOptions } from "@/constants/constants";
 import useAutoResize from "./useAutoResize";
+import { createPentagon } from "../utils/shape-factory";
 
 declare module 'fabric' {
     interface FabricObject {
@@ -74,6 +75,54 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
             const object = new Triangle({
                 ...TriangleOptions
             });
+
+            addToCanvas(object);
+        },
+
+        addInverseTriangle: () => {
+            const width = TriangleOptions.width;
+            const height = TriangleOptions.height;
+
+            const object = new Polygon(
+                [
+                    { x: 0, y: 0 },
+                    { x: width, y: 0 },
+                    { x: width / 2, y: height }
+                ],
+                {
+                    ...TriangleOptions
+                }
+            );
+
+            addToCanvas(object);
+        },
+
+        addDiamond: () => {
+            const width = DiamondOptions.width;
+            const height = DiamondOptions.height;
+
+            const object = new Polygon(
+                [
+                    { x: width / 2, y: 0 },
+                    { x: width, y: height / 2 },
+                    { x: width / 2, y: height },
+                    { x: 0, y: height / 2 },
+                ],
+                {
+                    ...DiamondOptions
+                }
+            );
+
+            addToCanvas(object);
+        },
+
+        addPentagon: () => {
+            const { width, height } = PentagonOptions;
+
+            const object = new Polygon(
+                createPentagon({ sides: 5, width, height }),
+                { ...PentagonOptions }
+            );
 
             addToCanvas(object);
         },
