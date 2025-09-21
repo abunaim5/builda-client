@@ -23,4 +23,7 @@ export type BuildEditorProps = {
 
 export interface Editor {
     addCircle: () => void;
+    addRectangle: () => void;
+    addRoundRectangle: () => void;
+    addTriangle: () => void;
 };

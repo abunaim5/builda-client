@@ -10,3 +10,27 @@ export const CircleOptions = {
     stroke: StrokeColor,
     strokeWidth: StrokeWidth
 };
+
+export const RectangleOptions = {
+    width: 300,
+    height: 300,
+    left: 100,
+    top: 100,
+    radius: 150,
+    fill: FillColor,
+    stroke: StrokeColor,
+    strokeWidth: StrokeWidth,
+    angle: 0,
+};
+
+export const TriangleOptions = {
+    width: 300,
+    height: 300,
+    left: 100,
+    top: 100,
+    radius: 150,
+    fill: FillColor,
+    stroke: StrokeColor,
+    strokeWidth: StrokeWidth,
+    angle: 0,
+};

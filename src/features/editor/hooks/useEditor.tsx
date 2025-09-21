@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
-import { Canvas, Circle, FabricObject, InteractiveFabricObject, Object, Rect, Shadow } from 'fabric';
+import { Canvas, Circle, FabricObject, InteractiveFabricObject, Object, Rect, Shadow, Triangle } from 'fabric';
 import { BuildEditorProps, Editor } from "@/types/types";
-import { CircleOptions } from "@/constants/constants";
+import { CircleOptions, RectangleOptions, TriangleOptions } from "@/constants/constants";
 import useAutoResize from "./useAutoResize";
 
 declare module 'fabric' {
@@ -37,15 +37,45 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
         canvas._centerObject(object, center);
     }
 
+    const addToCanvas = (object: Object) => {
+        objectCenter(object);
+        canvas.add(object);
+        canvas.setActiveObject(object);
+    }
+
     return {
+        addRectangle: () => {
+            const object = new Rect({
+                ...RectangleOptions,
+            });
+
+            addToCanvas(object);
+        },
+
+        addRoundRectangle: () => {
+            const object = new Rect({
+                ...RectangleOptions,
+                rx: 50,
+                ry: 50
+            });
+
+            addToCanvas(object);
+        },
+
         addCircle: () => {
             const object = new Circle({
                 ...CircleOptions
             });
 
-            objectCenter(object);
-            canvas.add(object);
-            canvas.setActiveObject(object);
+            addToCanvas(object);
+        },
+
+        addTriangle: () => {
+            const object = new Triangle({
+                ...TriangleOptions
+            });
+
+            addToCanvas(object);
         },
     };
 };

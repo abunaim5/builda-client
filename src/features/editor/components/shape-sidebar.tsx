@@ -26,10 +26,10 @@ const ShapeSidebar = ({ activeTool, editor, onChangeActiveTool }: ShapeSidebarPr
             <ToolSidebarHeader title='Shapes' description='Add shapes in canvas' />
             <ScrollArea className='p-4'>
                 <div className='grid grid-cols-3 gap-4'>
-                    <ShapeTool onClick={() => { }} icon={IoSquareSharp} />
-                    <ShapeTool onClick={() => { }} icon={FaSquare} />
+                    <ShapeTool onClick={() => editor?.addRectangle()} icon={IoSquareSharp} />
+                    <ShapeTool onClick={() => editor?.addRoundRectangle()} icon={FaSquare} />
                     <ShapeTool onClick={() => editor?.addCircle()} icon={FaCircle} />
-                    <ShapeTool onClick={() => { }} icon={IoTriangleSharp} />
+                    <ShapeTool onClick={() => editor?.addTriangle()} icon={IoTriangleSharp} />
                     <ShapeTool onClick={() => { }} icon={IoTriangleSharp} iconClassName='rotate-180' />
                     <ShapeTool onClick={() => { }} icon={MdSquare} iconClassName='rotate-45' />
                     <ShapeTool onClick={() => { }} icon={RiPentagonFill} />
