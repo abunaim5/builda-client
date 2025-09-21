@@ -1,5 +1,7 @@
-import { useCallback, useState } from "react";
-import { Canvas, FabricObject, InteractiveFabricObject, Rect, Shadow } from 'fabric';
+import { useCallback, useMemo, useState } from "react";
+import { Canvas, Circle, FabricObject, InteractiveFabricObject, Object, Rect, Shadow } from 'fabric';
+import { BuildEditorProps, Editor } from "@/types/types";
+import { CircleOptions } from "@/constants/constants";
 import useAutoResize from "./useAutoResize";
 
 declare module 'fabric' {
@@ -20,11 +22,47 @@ export interface InitEditorProps {
     initialCanvas: Canvas;
 };
 
+// build editor custom shapes and add to the canvas
+const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
+    const getWorkspace = () => {
+        return canvas
+            .getObjects()
+            .find((object) => object.name === 'clip');
+    }
+
+    const objectCenter = (object: Object) => {
+        const workspace = getWorkspace();
+        const center = workspace?.getCenterPoint();
+        if (!center) return;
+        canvas._centerObject(object, center);
+    }
+
+    return {
+        addCircle: () => {
+            const object = new Circle({
+                ...CircleOptions
+            });
+
+            objectCenter(object);
+            canvas.add(object);
+            canvas.setActiveObject(object);
+        },
+    };
+};
+
 const useEditor = () => {
     const [canvas, setCanvas] = useState<Canvas | null>(null);
     const [container, setContainer] = useState<HTMLDivElement | null>(null);
 
     useAutoResize({ canvas, container });
+
+    const editor = useMemo(() => {
+        if (canvas) {
+            return buildEditor({ canvas });
+        }
+
+        return undefined;
+    }, [canvas]);
 
     const init = useCallback(({ initialContainer, initialCanvas }: InitEditorProps) => {
         // added custom control classes 
@@ -64,18 +102,9 @@ const useEditor = () => {
 
         setCanvas(initialCanvas);
         setContainer(initialContainer);
-
-        const test = new Rect({
-            width: 200,
-            height: 200,
-            fill: 'black'
-        });
-        initialCanvas.add(test);
-        initialCanvas.centerObject(test);
-
     }, []);
 
-    return { init }
+    return { init, editor }
 };
 
 export default useEditor;

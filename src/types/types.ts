@@ -1,3 +1,5 @@
+import { Canvas } from "fabric";
+
 export type ActiveTool =
 | 'select'
 | 'shapes'
@@ -14,3 +16,11 @@ export type ActiveTool =
 | 'ai'
 | 'templates'
 | 'remove-bg';
+
+export type BuildEditorProps = {
+    canvas: Canvas;
+};
+
+export interface Editor {
+    addCircle: () => void;
+};

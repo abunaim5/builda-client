@@ -5,17 +5,18 @@ import { RiHexagonFill, RiPentagonFill } from "react-icons/ri";
 import { ImArrowLeft, ImArrowRight } from "react-icons/im";
 import { FaCircle, FaSquare, } from "react-icons/fa";
 import { MdSquare } from "react-icons/md";
-import { ActiveTool } from "@/types/types";
+import { ActiveTool, Editor } from "@/types/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ShapeTool from "./shape-tool";
 import { cn } from "@/lib/utils";
 
 interface ShapeSidebarProps {
+    editor: Editor | undefined;
     activeTool: ActiveTool;
     onChangeActiveTool: (tool: ActiveTool) => void;
 };
 
-const ShapeSidebar = ({ activeTool, onChangeActiveTool }: ShapeSidebarProps) => {
+const ShapeSidebar = ({ activeTool, editor, onChangeActiveTool }: ShapeSidebarProps) => {
     const onClose = () => {
         onChangeActiveTool('select');
     };
@@ -27,7 +28,7 @@ const ShapeSidebar = ({ activeTool, onChangeActiveTool }: ShapeSidebarProps) => 
                 <div className='grid grid-cols-3 gap-4'>
                     <ShapeTool onClick={() => { }} icon={IoSquareSharp} />
                     <ShapeTool onClick={() => { }} icon={FaSquare} />
-                    <ShapeTool onClick={() => { }} icon={FaCircle} />
+                    <ShapeTool onClick={() => editor?.addCircle()} icon={FaCircle} />
                     <ShapeTool onClick={() => { }} icon={IoTriangleSharp} />
                     <ShapeTool onClick={() => { }} icon={IoTriangleSharp} iconClassName='rotate-180' />
                     <ShapeTool onClick={() => { }} icon={MdSquare} iconClassName='rotate-45' />
