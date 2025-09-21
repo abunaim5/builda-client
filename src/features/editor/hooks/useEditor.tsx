@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
-import { Canvas, Circle, FabricObject, InteractiveFabricObject, Object, Polygon, Rect, Shadow, Triangle } from 'fabric';
+import { Canvas, Circle, FabricObject, InteractiveFabricObject, Polygon, Rect, Shadow, Triangle } from 'fabric';
 import { BuildEditorProps, Editor } from "@/types/types";
-import { CircleOptions, DiamondOptions, PentagonOptions, RectangleOptions, TriangleOptions } from "@/constants/constants";
+import { CircleOptions, DiamondOptions, HexagonOptions, PentagonOptions, RectangleOptions, StarOptions, TriangleOptions } from "@/constants/constants";
 import useAutoResize from "./useAutoResize";
-import { createPentagon } from "../utils/shape-factory";
+import { createDiamond, createInverseTriangle, createRegularPolygon, createStar } from "../utils/shape-factory";
 
 declare module 'fabric' {
     interface FabricObject {
@@ -31,20 +31,21 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
             .find((object) => object.name === 'clip');
     }
 
-    const objectCenter = (object: Object) => {
+    const objectCenter = (object: FabricObject) => {
         const workspace = getWorkspace();
         const center = workspace?.getCenterPoint();
         if (!center) return;
         canvas._centerObject(object, center);
     }
 
-    const addToCanvas = (object: Object) => {
+    const addToCanvas = (object: FabricObject) => {
         objectCenter(object);
         canvas.add(object);
         canvas.setActiveObject(object);
     }
 
     return {
+        // create and add rectangle
         addRectangle: () => {
             const object = new Rect({
                 ...RectangleOptions,
@@ -53,6 +54,7 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
             addToCanvas(object);
         },
 
+        // create and add round rectangle
         addRoundRectangle: () => {
             const object = new Rect({
                 ...RectangleOptions,
@@ -63,6 +65,7 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
             addToCanvas(object);
         },
 
+        // create and add circle
         addCircle: () => {
             const object = new Circle({
                 ...CircleOptions
@@ -71,6 +74,7 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
             addToCanvas(object);
         },
 
+        // create and add triangle
         addTriangle: () => {
             const object = new Triangle({
                 ...TriangleOptions
@@ -79,49 +83,79 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
             addToCanvas(object);
         },
 
+        // create and add inverse triangle
         addInverseTriangle: () => {
-            const width = TriangleOptions.width;
-            const height = TriangleOptions.height;
+            const { width, height } = TriangleOptions;
 
             const object = new Polygon(
-                [
-                    { x: 0, y: 0 },
-                    { x: width, y: 0 },
-                    { x: width / 2, y: height }
-                ],
-                {
-                    ...TriangleOptions
-                }
+                createInverseTriangle(width, height),
+                { ...TriangleOptions }
             );
 
             addToCanvas(object);
         },
 
+        // create and add diamond
         addDiamond: () => {
-            const width = DiamondOptions.width;
-            const height = DiamondOptions.height;
+            const { width, height } = DiamondOptions;
 
             const object = new Polygon(
-                [
-                    { x: width / 2, y: 0 },
-                    { x: width, y: height / 2 },
-                    { x: width / 2, y: height },
-                    { x: 0, y: height / 2 },
-                ],
-                {
-                    ...DiamondOptions
-                }
+                createDiamond(width, height),
+                { ...DiamondOptions }
             );
 
             addToCanvas(object);
         },
 
+        // create and add pentagon
         addPentagon: () => {
             const { width, height } = PentagonOptions;
+            const sides = 5;
+            // const rotation = -Math.PI / 2;
 
             const object = new Polygon(
-                createPentagon({ sides: 5, width, height }),
+                createRegularPolygon(sides, width, height),
                 { ...PentagonOptions }
+            );
+
+            addToCanvas(object);
+        },
+
+        // create and add Hexagon
+        addHexagon: () => {
+            const { width, height } = HexagonOptions;
+            const sides = 6;
+
+            const object = new Polygon(
+                createRegularPolygon(sides, width, height),
+                { ...HexagonOptions },
+            );
+
+            addToCanvas(object);
+        },
+
+        // create and add Hexagon horizontal
+        addHexagonHorizontal: () => {
+            const { width, height } = HexagonOptions;
+            const sides = 6;
+            const rotation = Math.PI / 3;
+
+            const object = new Polygon(
+                createRegularPolygon(sides, width, height, rotation),
+                { ...HexagonOptions },
+            );
+
+            addToCanvas(object);
+        },
+
+        // create and add Hexagon horizontal
+        addStar: () => {
+            const { width, height } = StarOptions;
+            const points = 5;
+
+            const object = new Polygon(
+                createStar(points, width, height),
+                { ...StarOptions },
             );
 
             addToCanvas(object);

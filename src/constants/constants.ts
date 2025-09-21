@@ -58,3 +58,27 @@ export const PentagonOptions = {
     strokeWidth: StrokeWidth,
     angle: 0,
 };
+
+export const HexagonOptions = {
+    width: 300,
+    height: 300,
+    left: 100,
+    top: 100,
+    radius: 150,
+    fill: FillColor,
+    stroke: StrokeColor,
+    strokeWidth: StrokeWidth,
+    angle: 0,
+};
+
+export const StarOptions = {
+    width: 300,
+    height: 300,
+    left: 100,
+    top: 100,
+    radius: 150,
+    fill: FillColor,
+    stroke: StrokeColor,
+    strokeWidth: StrokeWidth,
+    angle: 0,
+};
