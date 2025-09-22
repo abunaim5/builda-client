@@ -4,6 +4,7 @@ import { IoSquareSharp, IoStarSharp, IoTriangleSharp } from "react-icons/io5";
 import { RiHexagonFill, RiPentagonFill } from "react-icons/ri";
 import { ImArrowLeft, ImArrowRight } from "react-icons/im";
 import { FaCircle, FaSquare, } from "react-icons/fa";
+import { LiaStarSolid } from "react-icons/lia";
 import { MdSquare } from "react-icons/md";
 import { ActiveTool, Editor } from "@/types/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -35,7 +36,7 @@ const ShapeSidebar = ({ activeTool, editor, onChangeActiveTool }: ShapeSidebarPr
                     <ShapeTool onClick={() => editor?.addPentagon()} icon={RiPentagonFill} />
                     <ShapeTool onClick={() => editor?.addHexagon()} icon={RiHexagonFill} iconClassName='rotate-90' />
                     <ShapeTool onClick={() => editor?.addHexagonHorizontal()} icon={RiHexagonFill} />
-                    <ShapeTool onClick={() => editor?.addStar()} icon={IoStarSharp} />
+                    <ShapeTool onClick={() => editor?.addStar()} icon={LiaStarSolid} />
                     <ShapeTool onClick={() => editor?.addArrowRight()} icon={ImArrowRight} />
                     <ShapeTool onClick={() => editor?.addArrowLeft()} icon={ImArrowLeft} />
                 </div>

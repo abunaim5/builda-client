@@ -1,6 +1,6 @@
 type Point = { x: number; y: number };
 
-export const createInverseTriangle = (width: number, height: number) => {
+export const createInverseTriangle = (width: number, height: number): Point[] => {
     return [
         { x: 0, y: 0 },
         { x: width, y: 0 },
@@ -8,7 +8,7 @@ export const createInverseTriangle = (width: number, height: number) => {
     ];
 };
 
-export const createDiamond = (width: number, height: number) => {
+export const createDiamond = (width: number, height: number): Point[] => {
     return [
         { x: width / 2, y: 0 },
         { x: width, y: height / 2 },
@@ -17,7 +17,7 @@ export const createDiamond = (width: number, height: number) => {
     ];
 };
 
-export const createRegularPolygon = (sides: number, width: number, height: number, rotation = -Math.PI / 2) => {
+export const createRegularPolygon = (sides: number, width: number, height: number, rotation = -Math.PI / 2): Point[] => {
     const radius = Math.min(width, height) / 2;
     const centerX = width / 2;
     const centerY = height / 2;
@@ -29,13 +29,13 @@ export const createRegularPolygon = (sides: number, width: number, height: numbe
     }));
 };
 
-export const createStar = (pointsCount: number, width: number, height: number) => {
+export const createStar = (pointsCount: number, width: number, height: number): Point[] => {
     const outerRadius = Math.min(width, height) / 2;
     const innerRadius = outerRadius / 2;
     const centerX = width / 2;
     const centerY = height / 2;
 
-    return Array.from({length: pointsCount * 2}, (_, i) => {
+    return Array.from({ length: pointsCount * 2 }, (_, i) => {
         const radius = i % 2 === 0 ? outerRadius : innerRadius;
         const angle = (Math.PI / pointsCount) * i - Math.PI / 2;
         return {
@@ -43,4 +43,28 @@ export const createStar = (pointsCount: number, width: number, height: number) =
             y: centerY + radius * Math.sin(angle)
         };
     });
+};
+
+export const createArrowRight = (width: number, height: number): Point[] => {
+    return [
+        { x: 0, y: height * 0.25 },
+        { x: width * 0.6, y: height * 0.25 },
+        { x: width * 0.6, y: 0 },
+        { x: width, y: height / 2 },
+        { x: width * 0.6, y: height },
+        { x: width * 0.6, y: height * 0.75 },
+        { x: 0, y: height * 0.75 },
+    ]
+};
+
+export const createArrowLeft = (width: number, height: number): Point[] => {
+    return [
+        { x: width, y: height * 0.25 },
+        { x: width * 0.4, y: height * 0.25 },
+        { x: width * 0.4, y: 0 },
+        { x: 0, y: height / 2 },
+        { x: width * 0.4, y: height },
+        { x: width * 0.4, y: height * 0.75 },
+        { x: width, y: height * 0.75 },
+    ]
 };

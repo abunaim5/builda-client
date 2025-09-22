@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
 import { Canvas, Circle, FabricObject, InteractiveFabricObject, Polygon, Rect, Shadow, Triangle } from 'fabric';
 import { BuildEditorProps, Editor } from "@/types/types";
-import { CircleOptions, DiamondOptions, HexagonOptions, PentagonOptions, RectangleOptions, StarOptions, TriangleOptions } from "@/constants/constants";
+import { ArrowOptions, CircleOptions, DiamondOptions, HexagonOptions, PentagonOptions, RectangleOptions, StarOptions, TriangleOptions } from "@/constants/constants";
 import useAutoResize from "./useAutoResize";
-import { createDiamond, createInverseTriangle, createRegularPolygon, createStar } from "../utils/shape-factory";
+import { createArrowLeft, createArrowRight, createDiamond, createInverseTriangle, createRegularPolygon, createStar } from "../utils/shape-factory";
 
 declare module 'fabric' {
     interface FabricObject {
@@ -156,6 +156,30 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
             const object = new Polygon(
                 createStar(points, width, height),
                 { ...StarOptions },
+            );
+
+            addToCanvas(object);
+        },
+
+        // create and add arrow right
+        addArrowRight: () => {
+            const { width, height } = ArrowOptions;
+
+            const object = new Polygon(
+                createArrowRight(width, height),
+                { ...ArrowOptions },
+            );
+
+            addToCanvas(object);
+        },
+
+        // create and add arrow right
+        addArrowLeft: () => {
+            const { width, height } = ArrowOptions;
+
+            const object = new Polygon(
+                createArrowLeft(width, height),
+                { ...ArrowOptions },
             );
 
             addToCanvas(object);
