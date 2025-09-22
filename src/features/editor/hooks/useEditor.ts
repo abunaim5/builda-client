@@ -4,6 +4,7 @@ import { BuildEditorProps, Editor } from "@/types/types";
 import { ArrowOptions, CircleOptions, DiamondOptions, HexagonOptions, PentagonOptions, RectangleOptions, StarOptions, TriangleOptions } from "@/constants/constants";
 import useAutoResize from "./useAutoResize";
 import { createArrowLeft, createArrowRight, createDiamond, createInverseTriangle, createRegularPolygon, createStar } from "../utils/shape-factory";
+import useCanvasEvents from "./useCanvasEvents";
 
 declare module 'fabric' {
     interface FabricObject {
@@ -190,8 +191,13 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 const useEditor = () => {
     const [canvas, setCanvas] = useState<Canvas | null>(null);
     const [container, setContainer] = useState<HTMLDivElement | null>(null);
+    const [selectedObjects, setSelectedObjects] = useState<FabricObject[]>([]);
 
     useAutoResize({ canvas, container });
+    useCanvasEvents({
+        canvas,
+        setSelectedObjects
+    });
 
     const editor = useMemo(() => {
         if (canvas) {

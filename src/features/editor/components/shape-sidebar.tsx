@@ -1,6 +1,6 @@
 import ToolSidebarClose from "@/components/custom/tool-sidebar-close";
 import ToolSidebarHeader from "@/components/custom/tool-sidebar-header";
-import { IoSquareSharp, IoStarSharp, IoTriangleSharp } from "react-icons/io5";
+import { IoSquareSharp, IoTriangleSharp } from "react-icons/io5";
 import { RiHexagonFill, RiPentagonFill } from "react-icons/ri";
 import { ImArrowLeft, ImArrowRight } from "react-icons/im";
 import { FaCircle, FaSquare, } from "react-icons/fa";
