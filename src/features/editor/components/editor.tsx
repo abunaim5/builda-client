@@ -10,6 +10,7 @@ import { ActiveTool } from "@/types/types";
 import ShapeSidebar from "./shape-sidebar";
 import FillColorSidebar from "./fill-color-sidebar";
 import StrokeColorSidebar from "./stroke-color-sidebar";
+import StrokeWidthSidebar from "./stroke-width-sidebar";
 
 const Editor = () => {
     const { init, editor } = useEditor();
@@ -71,6 +72,11 @@ const Editor = () => {
                     onChangeActiveTool={onChangeActiveTool}
                     editor={editor}
                 />
+                <StrokeWidthSidebar
+                    activeTool={activeTool}
+                    onChangeActiveTool={onChangeActiveTool}
+                    editor={editor}
+                />
                 <main className='relative flex flex-col flex-1 overflow-auto bg-muted'>
                     <Toolbar
                         editor={editor}
@@ -78,7 +84,7 @@ const Editor = () => {
                         onchangeActiveTool={onChangeActiveTool}
                         key={JSON.stringify(editor?.canvas.getActiveObject())}
                     />
-                    <div className='flex-1 h-[calc(100vh-100px)] bg-muted' ref={containerRef}>
+                    <div className='flex-1 bg-muted' ref={containerRef}>
                         <canvas ref={canvasRef} />
                     </div>
                     <Footer />

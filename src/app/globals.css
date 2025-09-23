@@ -15,6 +15,7 @@ body {
 
 .circle-picker {
   width: auto !important;
+  background: transparent !important;
 }
 
 .circle-picker span div {

@@ -2,6 +2,7 @@ import CustomTooltip from "@/components/custom/custom-tooltip";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ActiveTool, Editor } from "@/types/types";
+import { RxBorderWidth } from "react-icons/rx";
 
 interface ToolbarProps {
     editor: Editor | undefined;
@@ -13,25 +14,32 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
     const fillColor = editor?.getActiveFillColor();
     const strokeColor = editor?.getActiveStrokeColor();
 
-    if (editor?.selectedObjects.length === 0) return (<></>);
+    // if (editor?.selectedObjects.length === 0) return (<></>);
 
     return (
-        <div className='w-[1050px] h-10 mx-auto flex items-center p-1 rounded-xl shrink-0 overflow-x-auto border z-[49] gap-x-2 bg-white'>
-            <div className='flex h-full'>
+        <div className={cn('w-fit h-10 p-1 rounded-lg absolute top-1 left-1/2 transform -translate-x-1/2 z-[49] shadow-sm bg-white', editor?.selectedObjects.length !== 0 ? 'visible' : 'hidden')}>
+            <div className='h-full flex items-center gap-x-2 shrink-0 overflow-x-auto'>
                 <CustomTooltip label='Color' side='bottom'>
-                    <Button size='icon' variant='ghost' onClick={() => onchangeActiveTool('fill')} className={cn('h-full', activeTool === 'fill' && 'bg-gray-100')}>
+                    <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('fill')} className={cn('h-full', activeTool === 'fill' && 'bg-gray-100')}>
                         <div
-                            className='rounded-full size-6 border'
+                            className='rounded-full size-5 border'
                             style={{ backgroundColor: fillColor }}
                         />
                     </Button>
                 </CustomTooltip>
-                <CustomTooltip label='Color' side='bottom'>
-                    <Button size='icon' variant='ghost' onClick={() => onchangeActiveTool('stroke-color')} className={cn('h-full', activeTool === 'stroke-color' && 'bg-gray-100')}>
+
+                <CustomTooltip label='Stroke color' side='bottom'>
+                    <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-color')} className={cn('h-full', activeTool === 'stroke-color' && 'bg-gray-100')}>
                         <div
-                            className='rounded-full size-6 border-2 bg-white'
+                            className='rounded-full size-5 border-2 bg-white'
                             style={{ borderColor: strokeColor }}
                         />
+                    </Button>
+                </CustomTooltip>
+
+                <CustomTooltip label='Stroke width' side='bottom'>
+                    <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-width')} className={cn('h-full', activeTool === 'stroke-width' && 'bg-gray-100')}>
+                        <RxBorderWidth className='size-5' />
                     </Button>
                 </CustomTooltip>
             </div>
