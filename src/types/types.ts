@@ -43,7 +43,7 @@ export interface Editor {
     addArrowLeft: () => void;
 
     canvas: Canvas;
-    fillColor: string;
+    getActiveFillColor: () => string;
     strokeColor: string;
     strokeWidth: number;
     changeFillColor: (value: string) => void;
