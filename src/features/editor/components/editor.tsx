@@ -8,6 +8,7 @@ import Toolbar from "./toolbar";
 import Footer from "./footer";
 import { ActiveTool } from "@/types/types";
 import ShapeSidebar from "./shape-sidebar";
+import FillColorSidebar from "./fill-color-sidebar";
 
 const Editor = () => {
     const { init, editor } = useEditor();
@@ -54,9 +55,23 @@ const Editor = () => {
             <Navbar activeTool={activeTool} onchangeActiveTool={onChangeActiveTool} />
             <div className='absolute w-full h-[calc(100vh-56px)] flex top-14'>
                 <Sidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
-                <ShapeSidebar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} editor={editor} />
+                <ShapeSidebar
+                    activeTool={activeTool}
+                    onChangeActiveTool={onChangeActiveTool}
+                    editor={editor}
+                />
+                <FillColorSidebar
+                    activeTool={activeTool}
+                    onChangeActiveTool={onChangeActiveTool}
+                    editor={editor}
+                />
                 <main className='relative flex flex-col flex-1 overflow-auto bg-muted'>
-                    <Toolbar />
+                    <Toolbar
+                        editor={editor}
+                        activeTool={activeTool}
+                        onchangeActiveTool={onChangeActiveTool}
+                        key={JSON.stringify(editor?.canvas.getActiveObject())}
+                    />
                     <div className='flex-1 h-[calc(100vh-100px)] bg-muted' ref={containerRef}>
                         <canvas ref={canvasRef} />
                     </div>

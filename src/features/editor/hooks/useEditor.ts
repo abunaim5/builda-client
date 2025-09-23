@@ -1,9 +1,10 @@
 import { useCallback, useMemo, useState } from "react";
 import { Canvas, Circle, FabricObject, InteractiveFabricObject, Polygon, Rect, Shadow, Triangle } from 'fabric';
 import { BuildEditorProps, Editor } from "@/types/types";
-import { ArrowOptions, CircleOptions, DiamondOptions, HexagonOptions, PentagonOptions, RectangleOptions, StarOptions, TriangleOptions } from "@/constants/constants";
+import { ArrowOptions, CircleOptions, DiamondOptions, FillColor, HexagonOptions, PentagonOptions, RectangleOptions, StarOptions, StrokeColor, StrokeWidth, TriangleOptions } from "@/constants/constants";
 import useAutoResize from "./useAutoResize";
 import { createArrowLeft, createArrowRight, createDiamond, createInverseTriangle, createRegularPolygon, createStar } from "../utils/shape-factory";
+import { isTextType } from "../utils/utils";
 import useCanvasEvents from "./useCanvasEvents";
 
 declare module 'fabric' {
@@ -25,7 +26,7 @@ export interface InitEditorProps {
 };
 
 // build editor custom shapes and add to the canvas
-const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
+const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor, setStrokeColor, setStrokeWidth, selectedObjects }: BuildEditorProps): Editor => {
     const getWorkspace = () => {
         return canvas
             .getObjects()
@@ -46,10 +47,47 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
     }
 
     return {
+        changeFillColor: (value: string) => {
+            setFillColor(value);
+            canvas.getActiveObjects().forEach((obj) => {
+                obj.set({ fill: value, strokeColor: value })
+                console.log('inside fill')
+            });
+            canvas.renderAll();
+        },
+
+        changeStrokeColor: (value: string) => {
+            setStrokeColor(value);
+            canvas.getActiveObjects().forEach((obj) => {
+                // ignore strokes if it is a text type
+                if (isTextType(obj.type)) {
+                    console.log('inside text')
+                    obj.set({ fill: value });
+                    return;
+                }
+                console.log('inside stroke')
+                obj.set({ stroke: value })
+            });
+            canvas.renderAll();
+        },
+
+        changeStrokeWidth: (value: number) => {
+            setStrokeWidth(value);
+            canvas.getActiveObjects().forEach((obj) => {
+                obj.set({ strokeWidth: value })
+                console.log('inside stroke')
+            });
+
+            canvas.renderAll();
+        },
+
         // create and add rectangle
         addRectangle: () => {
             const object = new Rect({
                 ...RectangleOptions,
+                fill: fillColor,
+                stroke: strokeColor,
+                strokeWidth: strokeWidth
             });
 
             addToCanvas(object);
@@ -60,7 +98,10 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
             const object = new Rect({
                 ...RectangleOptions,
                 rx: 50,
-                ry: 50
+                ry: 50,
+                fill: fillColor,
+                stroke: strokeColor,
+                strokeWidth: strokeWidth
             });
 
             addToCanvas(object);
@@ -69,7 +110,10 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
         // create and add circle
         addCircle: () => {
             const object = new Circle({
-                ...CircleOptions
+                ...CircleOptions,
+                fill: fillColor,
+                stroke: strokeColor,
+                strokeWidth: strokeWidth
             });
 
             addToCanvas(object);
@@ -78,7 +122,10 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
         // create and add triangle
         addTriangle: () => {
             const object = new Triangle({
-                ...TriangleOptions
+                ...TriangleOptions,
+                fill: fillColor,
+                stroke: strokeColor,
+                strokeWidth: strokeWidth
             });
 
             addToCanvas(object);
@@ -90,7 +137,12 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 
             const object = new Polygon(
                 createInverseTriangle(width, height),
-                { ...TriangleOptions }
+                {
+                    ...TriangleOptions,
+                    fill: fillColor,
+                    stroke: strokeColor,
+                    strokeWidth: strokeWidth
+                }
             );
 
             addToCanvas(object);
@@ -102,7 +154,12 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 
             const object = new Polygon(
                 createDiamond(width, height),
-                { ...DiamondOptions }
+                {
+                    ...DiamondOptions,
+                    fill: fillColor,
+                    stroke: strokeColor,
+                    strokeWidth: strokeWidth
+                }
             );
 
             addToCanvas(object);
@@ -116,7 +173,12 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 
             const object = new Polygon(
                 createRegularPolygon(sides, width, height),
-                { ...PentagonOptions }
+                {
+                    ...PentagonOptions,
+                    fill: fillColor,
+                    stroke: strokeColor,
+                    strokeWidth: strokeWidth
+                }
             );
 
             addToCanvas(object);
@@ -129,7 +191,12 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 
             const object = new Polygon(
                 createRegularPolygon(sides, width, height),
-                { ...HexagonOptions },
+                {
+                    ...HexagonOptions,
+                    fill: fillColor,
+                    stroke: strokeColor,
+                    strokeWidth: strokeWidth
+                },
             );
 
             addToCanvas(object);
@@ -143,7 +210,12 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 
             const object = new Polygon(
                 createRegularPolygon(sides, width, height, rotation),
-                { ...HexagonOptions },
+                {
+                    ...HexagonOptions,
+                    fill: fillColor,
+                    stroke: strokeColor,
+                    strokeWidth: strokeWidth
+                },
             );
 
             addToCanvas(object);
@@ -156,7 +228,12 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 
             const object = new Polygon(
                 createStar(points, width, height),
-                { ...StarOptions },
+                {
+                    ...StarOptions,
+                    fill: fillColor,
+                    stroke: strokeColor,
+                    strokeWidth: strokeWidth
+                },
             );
 
             addToCanvas(object);
@@ -168,7 +245,12 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 
             const object = new Polygon(
                 createArrowRight(width, height),
-                { ...ArrowOptions },
+                {
+                    ...ArrowOptions,
+                    fill: fillColor,
+                    stroke: strokeColor,
+                    strokeWidth: strokeWidth
+                },
             );
 
             addToCanvas(object);
@@ -180,11 +262,22 @@ const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
 
             const object = new Polygon(
                 createArrowLeft(width, height),
-                { ...ArrowOptions },
+                {
+                    ...ArrowOptions,
+                    fill: fillColor,
+                    stroke: strokeColor,
+                    strokeWidth: strokeWidth
+                },
             );
 
             addToCanvas(object);
         },
+
+        canvas,
+        fillColor,
+        strokeColor,
+        strokeWidth,
+        selectedObjects
     };
 };
 
@@ -192,6 +285,10 @@ const useEditor = () => {
     const [canvas, setCanvas] = useState<Canvas | null>(null);
     const [container, setContainer] = useState<HTMLDivElement | null>(null);
     const [selectedObjects, setSelectedObjects] = useState<FabricObject[]>([]);
+
+    const [fillColor, setFillColor] = useState(FillColor);
+    const [strokeColor, setStrokeColor] = useState(StrokeColor);
+    const [strokeWidth, setStrokeWidth] = useState(StrokeWidth);
 
     useAutoResize({ canvas, container });
     useCanvasEvents({
@@ -201,11 +298,20 @@ const useEditor = () => {
 
     const editor = useMemo(() => {
         if (canvas) {
-            return buildEditor({ canvas });
+            return buildEditor({
+                canvas,
+                fillColor,
+                strokeColor,
+                strokeWidth,
+                setFillColor,
+                setStrokeColor,
+                setStrokeWidth,
+                selectedObjects
+            });
         }
 
         return undefined;
-    }, [canvas]);
+    }, [canvas, fillColor, strokeColor, strokeWidth, selectedObjects]);
 
     const init = useCallback(({ initialContainer, initialCanvas }: InitEditorProps) => {
         // added custom control classes 

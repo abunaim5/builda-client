@@ -1,8 +1,25 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-html, body {
+html,
+body {
   height: 100%;
+}
+
+.chrome-picker {
+  width: auto !important;
+  box-shadow: none !important;
+  border-radius: 0.5rem !important;
+  overflow: hidden !important;
+}
+
+.circle-picker {
+  width: auto !important;
+}
+
+.circle-picker span div {
+  border: 1px solid lightgray;
+  border-radius: 100%;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -120,6 +137,7 @@ html, body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
