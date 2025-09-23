@@ -4,28 +4,28 @@ import { ActiveTool, Editor } from "@/types/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import ColorPicker from "./color-picker";
-import { FillColor } from "@/constants/constants";
+import { StrokeColor } from "@/constants/constants";
 
-interface FillColorSidebarProps {
+interface StrokeColorSidebarProps {
     editor: Editor | undefined;
     activeTool: ActiveTool;
     onChangeActiveTool: (tool: ActiveTool) => void;
 };
 
-const FillColorSidebar = ({ activeTool, editor, onChangeActiveTool }: FillColorSidebarProps) => {
-    const value = editor?.getActiveFillColor() || FillColor;
+const StrokeColorSidebar = ({ activeTool, editor, onChangeActiveTool }: StrokeColorSidebarProps) => {
+    const value = editor?.getActiveStrokeColor() || StrokeColor;
 
     const onClose = () => {
         onChangeActiveTool('select');
     };
 
     const onChange = (value: string) => {
-        editor?.changeFillColor(value);
+        editor?.changeStrokeColor(value);
     };
 
     return (
-        <aside className={cn('w-[360px] relative', activeTool === 'fill' ? 'visible' : 'hidden')}>
-            <ToolSidebarHeader title='Color' description='Add fill color in elements' />
+        <aside className={cn('w-[360px] relative', activeTool === 'stroke-color' ? 'visible' : 'hidden')}>
+            <ToolSidebarHeader title='Stroke color' description='Add stroke color in elements' />
             <ScrollArea className='p-4'>
                 <div className='w-full h-full'>
                     <ColorPicker value={value} onChange={onChange} />
@@ -36,4 +36,4 @@ const FillColorSidebar = ({ activeTool, editor, onChangeActiveTool }: FillColorS
     );
 };
 
-export default FillColorSidebar;
+export default StrokeColorSidebar;

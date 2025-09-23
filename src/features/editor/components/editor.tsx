@@ -9,6 +9,7 @@ import Footer from "./footer";
 import { ActiveTool } from "@/types/types";
 import ShapeSidebar from "./shape-sidebar";
 import FillColorSidebar from "./fill-color-sidebar";
+import StrokeColorSidebar from "./stroke-color-sidebar";
 
 const Editor = () => {
     const { init, editor } = useEditor();
@@ -61,6 +62,11 @@ const Editor = () => {
                     editor={editor}
                 />
                 <FillColorSidebar
+                    activeTool={activeTool}
+                    onChangeActiveTool={onChangeActiveTool}
+                    editor={editor}
+                />
+                <StrokeColorSidebar
                     activeTool={activeTool}
                     onChangeActiveTool={onChangeActiveTool}
                     editor={editor}
