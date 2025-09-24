@@ -51,7 +51,6 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
             setFillColor(value);
             canvas.getActiveObjects().forEach((obj) => {
                 obj.set({ fill: value, strokeColor: value })
-                console.log('inside fill')
             });
             canvas.renderAll();
         },
@@ -61,11 +60,9 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
             canvas.getActiveObjects().forEach((obj) => {
                 // ignore strokes if it is a text type
                 if (isTextType(obj.type)) {
-                    console.log('inside text')
                     obj.set({ fill: value });
                     return;
                 }
-                console.log('inside stroke')
                 obj.set({ stroke: value })
             });
             canvas.renderAll();
@@ -74,8 +71,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
         changeStrokeWidth: (value: number) => {
             setStrokeWidth(value);
             canvas.getActiveObjects().forEach((obj) => {
-                obj.set({ strokeWidth: value })
-                console.log('inside stroke')
+                obj.set({ strokeWidth: value, strokeUniform: true });
+                obj.setCoords();
             });
 
             canvas.renderAll();
@@ -276,27 +273,26 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
         canvas,
         getActiveFillColor: () => {
             const selectedObject = selectedObjects[0];
-            if(!selectedObject) return fillColor;
+            if (!selectedObject) return fillColor;
 
             const value = selectedObject.get('fill') || fillColor;
             return value as string;
         },
         getActiveStrokeColor: () => {
             const selectedObject = selectedObjects[0];
-            if(!selectedObject) return strokeColor;
+            if (!selectedObject) return strokeColor;
 
             const value = selectedObject.get('stroke-color') || strokeColor;
             return value as string;
         },
 
-        // getActiveStrokeColor: () => {
-        //     const selectedObject = selectedObjects[0];
-        //     if(!selectedObject) return strokeColor;
+        getActiveStrokeWidth: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return strokeWidth;
 
-        //     const value = selectedObject.get('stroke-color') || strokeColor;
-        //     return value as string;
-        // },
-        strokeWidth,
+            const value = selectedObject.get('strokeWidth') || strokeWidth;
+            return value as number;
+        },
         selectedObjects
     };
 };

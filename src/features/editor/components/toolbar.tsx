@@ -13,6 +13,7 @@ interface ToolbarProps {
 const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
     const fillColor = editor?.getActiveFillColor();
     const strokeColor = editor?.getActiveStrokeColor();
+    const strokeWidth = editor?.getActiveStrokeWidth();
 
     // if (editor?.selectedObjects.length === 0) return (<></>);
 
@@ -29,7 +30,7 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                 </CustomTooltip>
 
                 <CustomTooltip label='Stroke color' side='bottom'>
-                    <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-color')} className={cn('h-full', activeTool === 'stroke-color' && 'bg-gray-100')}>
+                    <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-color')} className={cn('h-full', activeTool === 'stroke-color' && 'bg-gray-100', strokeWidth !== 0 ? 'visible' : 'hidden')}>
                         <div
                             className='rounded-full size-5 border-2 bg-white'
                             style={{ borderColor: strokeColor }}

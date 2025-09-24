@@ -33,7 +33,7 @@ export const colors = [
 
 export const FillColor = 'rgba(0,0,0,1)';
 export const StrokeColor = 'rgba(0,0,0,1)';
-export const StrokeWidth = 2;
+export const StrokeWidth = 0;
 
 export const CircleOptions = {
     left: 100,

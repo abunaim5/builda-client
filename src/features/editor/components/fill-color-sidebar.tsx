@@ -26,8 +26,8 @@ const FillColorSidebar = ({ activeTool, editor, onChangeActiveTool }: FillColorS
     return (
         <aside className={cn('w-[360px] relative', activeTool === 'fill' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Color' description='Add fill color in elements' />
-            <ScrollArea className='p-4'>
-                <div className='w-full h-full'>
+            <ScrollArea>
+                <div className='p-4'>
                     <ColorPicker value={value} onChange={onChange} />
                 </div>
             </ScrollArea>

@@ -1,7 +1,6 @@
 'use client';
 import { CloudUpload, Download, MousePointerClick, Pencil, Redo2, SquarePen, Undo2 } from "lucide-react";
 import { BsCloudCheck } from "react-icons/bs";
-import { CiExport } from "react-icons/ci";
 import { FaCrown } from "react-icons/fa";
 import Logo from "./logo";
 import { ActiveTool } from "@/types/types";
@@ -34,12 +33,12 @@ const Navbar = ({ activeTool, onchangeActiveTool }: NavbarProps) => {
                 <div className='w-full h-full flex items-center gap-x-1'>
                     <DropdownMenu modal={false}>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost">File</Button>
+                            <Button variant="ghost" className='font-semibold'>File</Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="min-w-60" align="start">
                             <DropdownMenuLabel>
                                 <div className='flex text-base items-center gap-x-2'>
-                                    Rename project <Pencil className='size-5' />
+                                    Add a heading <Pencil className='size-5' />
                                 </div>
                                 <span className='text-xs font-normal text-muted-foreground select-none'>Logo By Abu Naim</span>
                             </DropdownMenuLabel>
@@ -85,7 +84,7 @@ const Navbar = ({ activeTool, onchangeActiveTool }: NavbarProps) => {
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <Button variant='outline' className='shadow-none'>
-                            <CiExport className='size-5 stroke-1' /> <span>Share</span>
+                            <Download className='size-5' /> <span>Export</span>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='min-w-72' align='center'>
@@ -100,7 +99,7 @@ const Navbar = ({ activeTool, onchangeActiveTool }: NavbarProps) => {
                                 PDF
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <Button variant='destructive' className='shadow-none w-full'>
+                                <Button className='shadow-none w-full bg-[#0F52FF] hover:bg-blue-700'>
                                     Download
                                 </Button>
                             </DropdownMenuItem>
