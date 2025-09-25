@@ -2,7 +2,7 @@ import ToolSidebarClose from "@/components/custom/tool-sidebar-close";
 import ToolSidebarHeader from "@/components/custom/tool-sidebar-header";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
-import { StrokeWidth } from "@/constants/constants";
+import { StrokeDashArray, StrokeWidth } from "@/constants/constants";
 import { ActiveTool, Editor } from "@/types/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -17,13 +17,18 @@ interface StrokeWidthSidebarProps {
 
 const StrokeWidthSidebar = ({ activeTool, editor, onChangeActiveTool }: StrokeWidthSidebarProps) => {
     const value = editor?.getActiveStrokeWidth() || StrokeWidth;
+    const strokeDash = editor?.getActiveStrokeDashArray() || StrokeDashArray;
 
     const onClose = () => {
         onChangeActiveTool('select');
     };
 
-    const onChange = (value: number) => {
+    const onChangeStrokeWidth = (value: number) => {
         editor?.changeStrokeWidth(value);
+    };
+
+    const onChangeStrokeType = (value: number[]) => {
+        editor?.changeStrokeDashArray(value);
     };
 
     return (
@@ -35,22 +40,22 @@ const StrokeWidthSidebar = ({ activeTool, editor, onChangeActiveTool }: StrokeWi
                     <Slider
                         defaultValue={[value]}
                         value={[value]}
-                        onValueChange={(values) => onChange(values[0])}
+                        onValueChange={(values) => onChangeStrokeWidth(values[0])}
                     />
                 </div>
                 <div className='p-4 space-y-4 border-b'>
                     <h3 className='text-sm font-semibold'>Stroke styles</h3>
                     <div className='flex items-center justify-between'>
-                        <Button variant='outline' className={cn(value === 0 && 'border-[#5BD0F4]')}>
+                        <Button onClick={() => { onChangeStrokeWidth(0); onChangeStrokeType([]) }} variant='outline' className={cn(value === 0 && 'border-[#5BD0F4]')}>
                             <Ban className='size-5' />
                         </Button>
-                        <Button variant='outline' className={cn(value > 0 && 'border-[#5BD0F4]')}>
+                        <Button onClick={() => { onChangeStrokeWidth(value !== 0 ? value : 4); onChangeStrokeType([]) }} variant='outline' className={cn((value > 0 && strokeDash.length === 0) ? 'border-[#5BD0F4]' : '')}>
                             <Minus className='size-5' />
                         </Button>
-                        <Button variant='outline'>
+                        <Button onClick={() => { onChangeStrokeWidth(value !== 0 ? value : 4); onChangeStrokeType([12, 12]) }} variant='outline' className={cn(strokeDash[0] === 12 && 'border-[#5BD0F4]')}>
                             <AiOutlineDash className='size-5' />
                         </Button>
-                        <Button variant='outline'>
+                        <Button onClick={() => { onChangeStrokeWidth(value !== 0 ? value : 4); onChangeStrokeType([5, 5]) }} variant='outline' className={cn(strokeDash[0] === 5 && 'border-[#5BD0F4]')}>
                             <AiOutlineSmallDash className='size-5' />
                         </Button>
                     </div>

@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { Canvas, Circle, FabricObject, InteractiveFabricObject, Polygon, Rect, Shadow, Triangle } from 'fabric';
 import { BuildEditorProps, Editor } from "@/types/types";
-import { ArrowOptions, CircleOptions, DiamondOptions, FillColor, HexagonOptions, PentagonOptions, RectangleOptions, StarOptions, StrokeColor, StrokeWidth, TriangleOptions } from "@/constants/constants";
+import { ArrowOptions, CircleOptions, DiamondOptions, FillColor, HexagonOptions, PentagonOptions, RectangleOptions, StarOptions, StrokeColor, StrokeDashArray, StrokeWidth, TriangleOptions } from "@/constants/constants";
 import useAutoResize from "./useAutoResize";
 import { createArrowLeft, createArrowRight, createDiamond, createInverseTriangle, createRegularPolygon, createStar } from "../utils/shape-factory";
 import { isTextType } from "../utils/utils";
@@ -26,7 +26,7 @@ export interface InitEditorProps {
 };
 
 // build editor custom shapes and add to the canvas
-const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor, setStrokeColor, setStrokeWidth, selectedObjects }: BuildEditorProps): Editor => {
+const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor, strokeDashArray, setStrokeColor, setStrokeWidth, setStrokeDashArray, selectedObjects }: BuildEditorProps): Editor => {
     const getWorkspace = () => {
         return canvas
             .getObjects()
@@ -78,13 +78,24 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
             canvas.renderAll();
         },
 
+        changeStrokeDashArray: (value: number[]) => {
+            setStrokeDashArray(value);
+            canvas.getActiveObjects().forEach((obj) => {
+                obj.set({ strokeDashArray: value, strokeUniform: true });
+                obj.setCoords();
+            });
+
+            canvas.renderAll();
+        },
+
         // create and add rectangle
         addRectangle: () => {
             const object = new Rect({
                 ...RectangleOptions,
                 fill: fillColor,
                 stroke: strokeColor,
-                strokeWidth: strokeWidth
+                strokeWidth: strokeWidth,
+                strokeDashArray: strokeDashArray
             });
 
             addToCanvas(object);
@@ -98,7 +109,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                 ry: 50,
                 fill: fillColor,
                 stroke: strokeColor,
-                strokeWidth: strokeWidth
+                strokeWidth: strokeWidth,
+                strokeDashArray: strokeDashArray
             });
 
             addToCanvas(object);
@@ -110,7 +122,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                 ...CircleOptions,
                 fill: fillColor,
                 stroke: strokeColor,
-                strokeWidth: strokeWidth
+                strokeWidth: strokeWidth,
+                strokeDashArray: strokeDashArray
             });
 
             addToCanvas(object);
@@ -122,7 +135,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                 ...TriangleOptions,
                 fill: fillColor,
                 stroke: strokeColor,
-                strokeWidth: strokeWidth
+                strokeWidth: strokeWidth,
+                strokeDashArray: strokeDashArray
             });
 
             addToCanvas(object);
@@ -138,7 +152,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                     ...TriangleOptions,
                     fill: fillColor,
                     stroke: strokeColor,
-                    strokeWidth: strokeWidth
+                    strokeWidth: strokeWidth,
+                    strokeDashArray: strokeDashArray
                 }
             );
 
@@ -155,7 +170,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                     ...DiamondOptions,
                     fill: fillColor,
                     stroke: strokeColor,
-                    strokeWidth: strokeWidth
+                    strokeWidth: strokeWidth,
+                    strokeDashArray: strokeDashArray
                 }
             );
 
@@ -174,7 +190,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                     ...PentagonOptions,
                     fill: fillColor,
                     stroke: strokeColor,
-                    strokeWidth: strokeWidth
+                    strokeWidth: strokeWidth,
+                    strokeDashArray: strokeDashArray
                 }
             );
 
@@ -192,7 +209,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                     ...HexagonOptions,
                     fill: fillColor,
                     stroke: strokeColor,
-                    strokeWidth: strokeWidth
+                    strokeWidth: strokeWidth,
+                    strokeDashArray: strokeDashArray
                 },
             );
 
@@ -211,7 +229,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                     ...HexagonOptions,
                     fill: fillColor,
                     stroke: strokeColor,
-                    strokeWidth: strokeWidth
+                    strokeWidth: strokeWidth,
+                    strokeDashArray: strokeDashArray
                 },
             );
 
@@ -229,7 +248,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                     ...StarOptions,
                     fill: fillColor,
                     stroke: strokeColor,
-                    strokeWidth: strokeWidth
+                    strokeWidth: strokeWidth,
+                    strokeDashArray: strokeDashArray
                 },
             );
 
@@ -246,7 +266,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                     ...ArrowOptions,
                     fill: fillColor,
                     stroke: strokeColor,
-                    strokeWidth: strokeWidth
+                    strokeWidth: strokeWidth,
+                    strokeDashArray: strokeDashArray
                 },
             );
 
@@ -263,7 +284,8 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
                     ...ArrowOptions,
                     fill: fillColor,
                     stroke: strokeColor,
-                    strokeWidth: strokeWidth
+                    strokeWidth: strokeWidth,
+                    strokeDashArray: strokeDashArray
                 },
             );
 
@@ -293,6 +315,15 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
             const value = selectedObject.get('strokeWidth') || strokeWidth;
             return value as number;
         },
+
+        getActiveStrokeDashArray: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return strokeDashArray;
+
+            const value = selectedObject.get('strokeDashArray') || strokeDashArray;
+            return value;
+        },
+
         selectedObjects
     };
 };
@@ -305,6 +336,7 @@ const useEditor = () => {
     const [fillColor, setFillColor] = useState(FillColor);
     const [strokeColor, setStrokeColor] = useState(StrokeColor);
     const [strokeWidth, setStrokeWidth] = useState(StrokeWidth);
+    const [strokeDashArray, setStrokeDashArray] = useState<number[]>(StrokeDashArray);
 
     useAutoResize({ canvas, container });
     useCanvasEvents({
@@ -319,15 +351,17 @@ const useEditor = () => {
                 fillColor,
                 strokeColor,
                 strokeWidth,
+                strokeDashArray,
                 setFillColor,
                 setStrokeColor,
                 setStrokeWidth,
+                setStrokeDashArray,
                 selectedObjects
             });
         }
 
         return undefined;
-    }, [canvas, fillColor, strokeColor, strokeWidth, selectedObjects]);
+    }, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, selectedObjects]);
 
     const init = useCallback(({ initialContainer, initialCanvas }: InitEditorProps) => {
         // added custom control classes 
