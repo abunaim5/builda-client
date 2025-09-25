@@ -1,7 +1,9 @@
 import CustomTooltip from "@/components/custom/custom-tooltip";
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { ActiveTool, Editor } from "@/types/types";
+import { BringToFront, Layers2, SendToBack } from "lucide-react";
 import { RxBorderWidth } from "react-icons/rx";
 
 interface ToolbarProps {
@@ -43,6 +45,23 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                         <RxBorderWidth className='size-5' />
                     </Button>
                 </CustomTooltip>
+                <DropdownMenu modal={false}>
+                    <CustomTooltip label='Layer' side='bottom'>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant='ghost' size='icon' className='h-full'>
+                                <Layers2 className='size-5' />
+                            </Button>
+                        </DropdownMenuTrigger>
+                    </CustomTooltip>
+                    <DropdownMenuContent align="center">
+                        <DropdownMenuItem onClick={() => editor?.bringForward()}>
+                            <BringToFront className='size-5' /> <span>Bring forward</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => editor?.sendBackwards()}>
+                            <SendToBack className='size-5' /> <span>Send backward</span>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </div>
     );

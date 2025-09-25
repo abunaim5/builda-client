@@ -49,6 +49,8 @@ export interface Editor {
     getActiveStrokeColor: () => string;
     getActiveStrokeWidth: () => number;
     getActiveStrokeDashArray: () => number[];
+    bringForward: () => void;
+    sendBackwards: () => void;
     changeFillColor: (value: string) => void;
     changeStrokeColor: (value: string) => void;
     changeStrokeWidth: (value: number) => void;

@@ -47,6 +47,32 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
     }
 
     return {
+        // object bring forward and send backward functionalities
+        bringForward: () => {
+            canvas.getActiveObjects().forEach((obj) => {
+                canvas.bringObjectForward(obj);
+            });
+
+            canvas.renderAll();
+
+            const workspace = getWorkspace();
+            if (!workspace) return;
+            canvas.sendObjectToBack(workspace);
+        },
+
+        sendBackwards: () => {
+            canvas.getActiveObjects().forEach((obj) => {
+                canvas.sendObjectBackwards(obj);
+            });
+
+            canvas.renderAll();
+
+            const workspace = getWorkspace();
+            if (!workspace) return;
+            canvas.sendObjectToBack(workspace);
+        },
+
+        // change object color, width and dash array functionalities
         changeFillColor: (value: string) => {
             setFillColor(value);
             canvas.getActiveObjects().forEach((obj) => {
