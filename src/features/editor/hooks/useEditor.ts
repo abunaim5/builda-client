@@ -1,10 +1,41 @@
 import { useCallback, useMemo, useState } from "react";
-import { Canvas, Circle, FabricObject, InteractiveFabricObject, Polygon, Rect, Shadow, Triangle } from 'fabric';
 import { BuildEditorProps, Editor } from "@/types/types";
-import { ArrowOptions, CircleOptions, DiamondOptions, FillColor, HexagonOptions, PentagonOptions, RectangleOptions, StarOptions, StrokeColor, StrokeDashArray, StrokeWidth, TriangleOptions } from "@/constants/constants";
-import useAutoResize from "./useAutoResize";
-import { createArrowLeft, createArrowRight, createDiamond, createInverseTriangle, createRegularPolygon, createStar } from "../utils/shape-factory";
+import {
+    Canvas,
+    Circle,
+    FabricObject,
+    InteractiveFabricObject,
+    Polygon,
+    Rect,
+    Shadow,
+    Textbox,
+    Triangle
+} from 'fabric';
+import {
+    ArrowOptions,
+    CircleOptions,
+    DiamondOptions,
+    FillColor,
+    HexagonOptions,
+    PentagonOptions,
+    RectangleOptions,
+    StarOptions,
+    StrokeColor,
+    StrokeDashArray,
+    StrokeWidth,
+    TextOptions,
+    TriangleOptions
+} from "@/constants/constants";
+import {
+    createArrowLeft,
+    createArrowRight,
+    createDiamond,
+    createInverseTriangle,
+    createRegularPolygon,
+    createStar
+} from "../utils/shape-factory";
 import { isTextType } from "../utils/utils";
+import useAutoResize from "./useAutoResize";
 import useCanvasEvents from "./useCanvasEvents";
 
 declare module 'fabric' {
@@ -120,6 +151,17 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
             });
 
             canvas.renderAll();
+        },
+
+        // create and add text functionality
+        addText: (value, options) => {
+            const obj = new Textbox(value, {
+                ...TextOptions,
+                ...options,
+                fill: fillColor,
+            });
+
+            addToCanvas(obj);
         },
 
         // create and add rectangle
@@ -327,7 +369,7 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
         },
 
         canvas,
-        
+
         getActiveOpacity: () => {
             const selectedObject = selectedObjects[0];
             if (!selectedObject) return 1;

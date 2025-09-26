@@ -11,6 +11,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import Transparency from "./transparency";
+import { isTextType } from "../utils/utils";
 
 interface ToolbarProps {
     editor: Editor | undefined;
@@ -22,6 +23,8 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
     const fillColor = editor?.getActiveFillColor();
     const strokeColor = editor?.getActiveStrokeColor();
     const strokeWidth = editor?.getActiveStrokeWidth();
+    const selectedObjectType = editor?.selectedObjects[0]?.type;
+    const isText = isTextType(selectedObjectType);
 
     // if (editor?.selectedObjects.length === 0) return (<></>);
 
@@ -36,21 +39,24 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                         />
                     </Button>
                 </CustomTooltip>
+                {!isText && (
+                    <CustomTooltip label='Stroke color' side='bottom'>
+                        <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-color')} className={cn('h-full', activeTool === 'stroke-color' && 'bg-gray-100', strokeWidth !== 0 ? 'visible' : 'hidden')}>
+                            <div
+                                className='rounded-full size-5 border-2 bg-white'
+                                style={{ borderColor: strokeColor }}
+                            />
+                        </Button>
+                    </CustomTooltip>
+                )}
 
-                <CustomTooltip label='Stroke color' side='bottom'>
-                    <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-color')} className={cn('h-full', activeTool === 'stroke-color' && 'bg-gray-100', strokeWidth !== 0 ? 'visible' : 'hidden')}>
-                        <div
-                            className='rounded-full size-5 border-2 bg-white'
-                            style={{ borderColor: strokeColor }}
-                        />
-                    </Button>
-                </CustomTooltip>
-
-                <CustomTooltip label='Stroke style' side='bottom'>
-                    <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-width')} className={cn('h-full', activeTool === 'stroke-width' && 'bg-gray-100')}>
-                        <RxBorderWidth className='size-5' />
-                    </Button>
-                </CustomTooltip>
+                {!isText && (
+                    <CustomTooltip label='Stroke style' side='bottom'>
+                        <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-width')} className={cn('h-full', activeTool === 'stroke-width' && 'bg-gray-100')}>
+                            <RxBorderWidth className='size-5' />
+                        </Button>
+                    </CustomTooltip>
+                )}
 
                 <DropdownMenu modal={false}>
                     <CustomTooltip label='Layer' side='bottom'>

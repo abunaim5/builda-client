@@ -1,4 +1,4 @@
-import { Canvas, FabricObject } from "fabric";
+import { Canvas, FabricObject, ITextProps } from "fabric";
 
 export type ActiveTool =
     | 'select'
@@ -31,6 +31,7 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+    addText: (value: string, options?: Partial<ITextProps>) => void;
     addCircle: () => void;
     addRectangle: () => void;
     addRoundRectangle: () => void;

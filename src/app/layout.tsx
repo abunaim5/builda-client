@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Open_Sans, Noto_Sans } from "next/font/google";
+import { Inter, Open_Sans } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -12,10 +12,10 @@ const open_sans = Open_Sans({
   subsets: ["latin"],
 });
 
-const noto_sans = Noto_Sans({
-  variable: "--font-noto-sans",
-  subsets: ["latin"],
-});
+// const noto_sans = Noto_Sans({
+//   variable: "--font-noto-sans",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "Builda",
@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} ${open_sans.className} ${noto_sans.className} antialiased`}
+        className={`${inter.className} ${open_sans.className} antialiased`}
       >
         {children}
       </body>

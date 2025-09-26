@@ -31,10 +31,22 @@ export const colors = [
     'transparent'
 ];
 
+export const FontFamily = 'Arial';
+export const FontSize = 24;
 export const FillColor = 'rgba(0,0,0,1)';
 export const StrokeColor = 'rgba(0,0,0,1)';
 export const StrokeWidth = 0;
 export const StrokeDashArray = [];
+
+export const TextOptions = {
+    // type: 'textbox',
+    left: 100,
+    top: 100,
+    width: 300,
+    fill: FillColor,
+    fontFamily: FontFamily,
+    fontSize: FontSize
+};
 
 export const CircleOptions = {
     left: 100,
