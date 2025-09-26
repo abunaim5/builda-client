@@ -45,12 +45,14 @@ export interface Editor {
     addArrowLeft: () => void;
 
     canvas: Canvas;
+    getActiveOpacity: () => number;
     getActiveFillColor: () => string;
     getActiveStrokeColor: () => string;
     getActiveStrokeWidth: () => number;
     getActiveStrokeDashArray: () => number[];
     bringForward: () => void;
     sendBackwards: () => void;
+    changeOpacity: (value: number) => void;
     changeFillColor: (value: string) => void;
     changeStrokeColor: (value: string) => void;
     changeStrokeWidth: (value: number) => void;

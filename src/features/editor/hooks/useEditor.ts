@@ -72,6 +72,14 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
             canvas.sendObjectToBack(workspace);
         },
 
+        changeOpacity: (value: number) => {
+            canvas.getActiveObjects().forEach((obj) => {
+                obj.set({ opacity: value });
+            });
+
+            canvas.renderAll();
+        },
+
         // change object color, width and dash array functionalities
         changeFillColor: (value: string) => {
             setFillColor(value);
@@ -319,6 +327,15 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
         },
 
         canvas,
+        
+        getActiveOpacity: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return 1;
+
+            const value = selectedObject.get('opacity') || 1;
+            return value;
+        },
+
         getActiveFillColor: () => {
             const selectedObject = selectedObjects[0];
             if (!selectedObject) return fillColor;

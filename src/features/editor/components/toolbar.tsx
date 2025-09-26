@@ -1,10 +1,16 @@
+import { ActiveTool, Editor } from "@/types/types";
+import { RxBorderWidth } from "react-icons/rx";
+import { BringToFront, Layers2, SendToBack } from "lucide-react";
 import CustomTooltip from "@/components/custom/custom-tooltip";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { ActiveTool, Editor } from "@/types/types";
-import { BringToFront, Layers2, SendToBack } from "lucide-react";
-import { RxBorderWidth } from "react-icons/rx";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import Transparency from "./transparency";
 
 interface ToolbarProps {
     editor: Editor | undefined;
@@ -40,20 +46,21 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                     </Button>
                 </CustomTooltip>
 
-                <CustomTooltip label='Stroke width' side='bottom'>
+                <CustomTooltip label='Stroke style' side='bottom'>
                     <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-width')} className={cn('h-full', activeTool === 'stroke-width' && 'bg-gray-100')}>
                         <RxBorderWidth className='size-5' />
                     </Button>
                 </CustomTooltip>
+
                 <DropdownMenu modal={false}>
                     <CustomTooltip label='Layer' side='bottom'>
                         <DropdownMenuTrigger asChild>
-                            <Button variant='ghost' size='icon' className='h-full'>
+                            <Button variant='ghost' size='icon' className={cn('h-full')}>
                                 <Layers2 className='size-5' />
                             </Button>
                         </DropdownMenuTrigger>
                     </CustomTooltip>
-                    <DropdownMenuContent align="center">
+                    <DropdownMenuContent align="center" className='mt-[2px]'>
                         <DropdownMenuItem onClick={() => editor?.bringForward()}>
                             <BringToFront className='size-5' /> <span>Bring forward</span>
                         </DropdownMenuItem>
@@ -62,6 +69,8 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
+
+                <Transparency editor={editor} />
             </div>
         </div>
     );

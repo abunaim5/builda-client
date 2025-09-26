@@ -4,8 +4,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
 import { StrokeDashArray, StrokeWidth } from "@/constants/constants";
 import { ActiveTool, Editor } from "@/types/types";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { AiOutlineDash, AiOutlineSmallDash } from "react-icons/ai";
 import { Ban, Minus } from "lucide-react";
 
@@ -33,7 +33,7 @@ const StrokeWidthSidebar = ({ activeTool, editor, onChangeActiveTool }: StrokeWi
 
     return (
         <aside className={cn('w-[360px] relative', activeTool === 'stroke-width' ? 'visible' : 'hidden')}>
-            <ToolSidebarHeader title='Stroke width' description='Change stroke width in elements' />
+            <ToolSidebarHeader title='Stroke styles' description='Change the stroke weight and styles' />
             <ScrollArea>
                 <div className='p-4 space-y-4 border-b'>
                     <h3 className='text-sm font-semibold'>Stroke weight</h3>
@@ -44,7 +44,7 @@ const StrokeWidthSidebar = ({ activeTool, editor, onChangeActiveTool }: StrokeWi
                     />
                 </div>
                 <div className='p-4 space-y-4 border-b'>
-                    <h3 className='text-sm font-semibold'>Stroke styles</h3>
+                    <h3 className='text-sm font-semibold'>Stroke patterns</h3>
                     <div className='flex items-center justify-between'>
                         <Button onClick={() => { onChangeStrokeWidth(0); onChangeStrokeType([]) }} variant='outline' className={cn(value === 0 && 'border-[#5BD0F4]')}>
                             <Ban className='size-5' />
