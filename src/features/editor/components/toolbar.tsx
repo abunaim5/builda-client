@@ -31,14 +31,32 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
     return (
         <div className={cn('w-fit h-10 p-1 rounded-lg absolute top-1 left-1/2 transform -translate-x-1/2 z-[49] shadow-sm bg-white', editor?.selectedObjects.length !== 0 ? 'visible' : 'hidden')}>
             <div className='h-full flex items-center gap-x-2 shrink-0 overflow-x-auto'>
-                <CustomTooltip label='Color' side='bottom'>
+                {isText && (
+                    <CustomTooltip label='Font' side='bottom'>
+                        <Button variant='outline' onClick={() => onchangeActiveTool('font')} className={cn('h-full', activeTool === 'font' && 'bg-gray-100')}>
+                            Arial
+                        </Button>
+                    </CustomTooltip>
+                )}
+
+                <CustomTooltip label={isText ? 'Text color' : 'Color'} side='bottom'>
                     <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('fill')} className={cn('h-full', activeTool === 'fill' && 'bg-gray-100')}>
-                        <div
-                            className='rounded-full size-5 border'
-                            style={{ backgroundColor: fillColor }}
-                        />
+                        {
+                            isText ? (<div className='flex flex-col items-center justify-center'>
+                                <span className='text-lg font-bold leading-none'>A</span>
+                                <div
+                                    className='rounded-full h-1 w-5'
+                                    style={{ backgroundColor: fillColor }}
+                                />
+                            </div>) : (<div
+                                className='rounded-full size-5 border'
+                                style={{ backgroundColor: fillColor }}
+                            />)
+                        }
+
                     </Button>
                 </CustomTooltip>
+
                 {!isText && (
                     <CustomTooltip label='Stroke color' side='bottom'>
                         <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-color')} className={cn('h-full', activeTool === 'stroke-color' && 'bg-gray-100', strokeWidth !== 0 ? 'visible' : 'hidden')}>

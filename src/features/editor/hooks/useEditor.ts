@@ -16,6 +16,7 @@ import {
     CircleOptions,
     DiamondOptions,
     FillColor,
+    FontFamily,
     HexagonOptions,
     PentagonOptions,
     RectangleOptions,
@@ -57,7 +58,20 @@ export interface InitEditorProps {
 };
 
 // build editor custom shapes and add to the canvas
-const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor, strokeDashArray, setStrokeColor, setStrokeWidth, setStrokeDashArray, selectedObjects }: BuildEditorProps): Editor => {
+const buildEditor = ({
+    canvas,
+    fontFamily,
+    fillColor,
+    strokeColor,
+    strokeWidth,
+    setFillColor,
+    strokeDashArray,
+    setFontFamily,
+    setStrokeColor,
+    setStrokeWidth,
+    setStrokeDashArray,
+    selectedObjects
+}: BuildEditorProps): Editor => {
     const getWorkspace = () => {
         return canvas
             .getObjects()
@@ -102,7 +116,18 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
             if (!workspace) return;
             canvas.sendObjectToBack(workspace);
         },
-
+        
+        changeFontFamily: (value: string) => {
+            setFontFamily(value);
+            canvas.getActiveObjects().forEach((obj) => {
+                if (isTextType(obj.type)) {
+                    obj.set({ fontFamily: value });
+                }
+            });
+            canvas.renderAll();
+        },
+        
+        // change object color, width and dash array functionalities
         changeOpacity: (value: number) => {
             canvas.getActiveObjects().forEach((obj) => {
                 obj.set({ opacity: value });
@@ -111,7 +136,6 @@ const buildEditor = ({ canvas, fillColor, strokeColor, strokeWidth, setFillColor
             canvas.renderAll();
         },
 
-        // change object color, width and dash array functionalities
         changeFillColor: (value: string) => {
             setFillColor(value);
             canvas.getActiveObjects().forEach((obj) => {
@@ -418,6 +442,7 @@ const useEditor = () => {
     const [container, setContainer] = useState<HTMLDivElement | null>(null);
     const [selectedObjects, setSelectedObjects] = useState<FabricObject[]>([]);
 
+    const [fontFamily, setFontFamily] = useState(FontFamily);
     const [fillColor, setFillColor] = useState(FillColor);
     const [strokeColor, setStrokeColor] = useState(StrokeColor);
     const [strokeWidth, setStrokeWidth] = useState(StrokeWidth);
@@ -433,10 +458,12 @@ const useEditor = () => {
         if (canvas) {
             return buildEditor({
                 canvas,
+                fontFamily,
                 fillColor,
                 strokeColor,
                 strokeWidth,
                 strokeDashArray,
+                setFontFamily,
                 setFillColor,
                 setStrokeColor,
                 setStrokeWidth,
@@ -446,7 +473,7 @@ const useEditor = () => {
         }
 
         return undefined;
-    }, [canvas, fillColor, strokeColor, strokeWidth, strokeDashArray, selectedObjects]);
+    }, [canvas, fontFamily, fillColor, strokeColor, strokeWidth, strokeDashArray, selectedObjects]);
 
     const init = useCallback(({ initialContainer, initialCanvas }: InitEditorProps) => {
         // added custom control classes 

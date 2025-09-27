@@ -19,11 +19,13 @@ export type ActiveTool =
 
 export type BuildEditorProps = {
     canvas: Canvas;
+    fontFamily: string;
     fillColor: string;
     strokeColor: string;
     strokeWidth: number;
     strokeDashArray: number[];
     selectedObjects: FabricObject[];
+    setFontFamily: (value: string) => void;
     setFillColor: (value: string) => void;
     setStrokeColor: (value: string) => void;
     setStrokeWidth: (value: number) => void;
@@ -53,6 +55,7 @@ export interface Editor {
     getActiveStrokeDashArray: () => number[];
     bringForward: () => void;
     sendBackwards: () => void;
+    changeFontFamily: (value: string) => void;
     changeOpacity: (value: number) => void;
     changeFillColor: (value: string) => void;
     changeStrokeColor: (value: string) => void;
