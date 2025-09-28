@@ -48,6 +48,7 @@ export interface Editor {
     addArrowLeft: () => void;
 
     canvas: Canvas;
+    getActiveFontFamily: () => string;
     getActiveOpacity: () => number;
     getActiveFillColor: () => string;
     getActiveStrokeColor: () => string;

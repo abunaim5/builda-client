@@ -31,6 +31,27 @@ export const colors = [
     'transparent'
 ];
 
+export const fonts = [
+    'Arial',
+    'Arial Black',
+    'Bookman',
+    'Brush Script MT',
+    'Courier New',
+    'Comic Sans MS',
+    'Garamond',
+    'Geneva',
+    'Georgia',
+    'Helvetica',
+    'Impact',
+    'Lucida Console',
+    'Lucida Sans Unicode',
+    'Palatino',
+    'Tahoma',
+    'Times New Roman',
+    'Trebuchet MS',
+    'Verdana'
+]
+
 export const FontFamily = 'Arial';
 export const FontSize = 24;
 export const FillColor = 'rgba(0,0,0,1)';

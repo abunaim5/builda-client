@@ -7,12 +7,13 @@ import ColorPicker from "./color-picker";
 import { FillColor } from "@/constants/constants";
 
 interface FillColorSidebarProps {
+    isText: boolean;
     editor: Editor | undefined;
     activeTool: ActiveTool;
     onChangeActiveTool: (tool: ActiveTool) => void;
 };
 
-const FillColorSidebar = ({ activeTool, editor, onChangeActiveTool }: FillColorSidebarProps) => {
+const FillColorSidebar = ({ isText, activeTool, editor, onChangeActiveTool }: FillColorSidebarProps) => {
     const value = editor?.getActiveFillColor() || FillColor;
 
     const onClose = () => {
@@ -25,7 +26,7 @@ const FillColorSidebar = ({ activeTool, editor, onChangeActiveTool }: FillColorS
 
     return (
         <aside className={cn('w-[360px] relative', activeTool === 'fill' ? 'visible' : 'hidden')}>
-            <ToolSidebarHeader title='Color' description='Add fill color in elements' />
+            <ToolSidebarHeader title={isText ? 'Text color' : 'Color'} description={isText ? 'Add text color' : 'Add fill color in elements'} />
             <ScrollArea>
                 <div className='p-4'>
                     <ColorPicker value={value} onChange={onChange} />

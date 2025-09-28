@@ -20,6 +20,7 @@ interface ToolbarProps {
 };
 
 const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
+    const fontFamily = editor?.getActiveFontFamily();
     const fillColor = editor?.getActiveFillColor();
     const strokeColor = editor?.getActiveStrokeColor();
     const strokeWidth = editor?.getActiveStrokeWidth();
@@ -34,7 +35,7 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                 {isText && (
                     <CustomTooltip label='Font' side='bottom'>
                         <Button variant='outline' onClick={() => onchangeActiveTool('font')} className={cn('h-full', activeTool === 'font' && 'bg-gray-100')}>
-                            Arial
+                            {fontFamily}
                         </Button>
                     </CustomTooltip>
                 )}
@@ -43,7 +44,7 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                     <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('fill')} className={cn('h-full', activeTool === 'fill' && 'bg-gray-100')}>
                         {
                             isText ? (<div className='flex flex-col items-center justify-center'>
-                                <span className='text-lg font-bold leading-none'>A</span>
+                                <span className='text-lg font-semibold leading-none'>A</span>
                                 <div
                                     className='rounded-full h-1 w-5'
                                     style={{ backgroundColor: fillColor }}

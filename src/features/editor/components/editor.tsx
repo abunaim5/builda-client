@@ -12,9 +12,13 @@ import FillColorSidebar from "./fill-color-sidebar";
 import StrokeColorSidebar from "./stroke-color-sidebar";
 import StrokeWidthSidebar from "./stroke-width-sidebar";
 import TextSidebar from "./text-sidebar";
+import { isTextType } from "../utils/utils";
+import FontSidebar from "./font-sidebar";
 
 const Editor = () => {
     const { init, editor } = useEditor();
+    const selectedObjectType = editor?.selectedObjects[0]?.type;
+    const isText = isTextType(selectedObjectType);
     const [activeTool, setActiveTool] = useState<ActiveTool>('select');
     const onChangeActiveTool = useCallback((tool: ActiveTool) => {
         if (tool === activeTool) {
@@ -63,12 +67,18 @@ const Editor = () => {
                     onChangeActiveTool={onChangeActiveTool}
                     editor={editor}
                 />
+                <FontSidebar
+                    activeTool={activeTool}
+                    onChangeActiveTool={onChangeActiveTool}
+                    editor={editor}
+                />
                 <ShapeSidebar
                     activeTool={activeTool}
                     onChangeActiveTool={onChangeActiveTool}
                     editor={editor}
                 />
                 <FillColorSidebar
+                    isText={isText}
                     activeTool={activeTool}
                     onChangeActiveTool={onChangeActiveTool}
                     editor={editor}

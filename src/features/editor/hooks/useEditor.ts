@@ -394,6 +394,14 @@ const buildEditor = ({
 
         canvas,
 
+        getActiveFontFamily: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return fontFamily;
+
+            const value = selectedObject.get('fontFamily') || fontFamily;
+            return value as string;
+        },
+
         getActiveOpacity: () => {
             const selectedObject = selectedObjects[0];
             if (!selectedObject) return 1;
