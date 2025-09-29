@@ -54,6 +54,7 @@ export const fonts = [
 
 export const FontFamily = 'Arial';
 export const FontSize = 24;
+export const FontWeight = 400;
 export const FillColor = 'rgba(0,0,0,1)';
 export const StrokeColor = 'rgba(0,0,0,1)';
 export const StrokeWidth = 0;

@@ -6,7 +6,6 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Slider } from "@/components/ui/slider";
-import { cn } from "@/lib/utils";
 import { Editor } from "@/types/types";
 import { useEffect, useMemo, useState } from "react";
 import { RxTransparencyGrid } from "react-icons/rx";
@@ -34,7 +33,7 @@ const Transparency = ({ editor }: TransparencyProps) => {
         <Popover>
             <CustomTooltip label='Transparency' side='bottom'>
                 <PopoverTrigger asChild>
-                    <Button variant='ghost' size='icon' className={cn('h-full')}>
+                    <Button variant='ghost' size='icon' className='h-full'>
                         <RxTransparencyGrid className='size-5' />
                     </Button>
                 </PopoverTrigger>

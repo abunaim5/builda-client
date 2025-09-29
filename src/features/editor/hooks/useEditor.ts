@@ -17,6 +17,7 @@ import {
     DiamondOptions,
     FillColor,
     FontFamily,
+    FontWeight,
     HexagonOptions,
     PentagonOptions,
     RectangleOptions,
@@ -67,6 +68,7 @@ const buildEditor = ({
     setFillColor,
     strokeDashArray,
     setFontFamily,
+    // setFontWeight,
     setStrokeColor,
     setStrokeWidth,
     setStrokeDashArray,
@@ -116,7 +118,8 @@ const buildEditor = ({
             if (!workspace) return;
             canvas.sendObjectToBack(workspace);
         },
-        
+
+        // font related functionality
         changeFontFamily: (value: string) => {
             setFontFamily(value);
             canvas.getActiveObjects().forEach((obj) => {
@@ -126,7 +129,35 @@ const buildEditor = ({
             });
             canvas.renderAll();
         },
-        
+
+
+        changeFontWeight: (value: number) => {
+            canvas.getActiveObjects().forEach((obj) => {
+                if (isTextType(obj.type)) {
+                    obj.set({ fontWeight: value });
+                }
+            });
+            canvas.renderAll();
+        },
+
+        changeFontItalic: (value: string) => {
+            canvas.getActiveObjects().forEach((obj) => {
+                if (isTextType(obj.type)) {
+                    obj.set({ fontStyle: value });
+                }
+            });
+            canvas.renderAll();
+        },
+
+        changeFontStrikethrough: (value: boolean) => {
+            canvas.getActiveObjects().forEach((obj) => {
+                if (isTextType(obj.type)) {
+                    obj.set({ linethrough: value });
+                }
+            });
+            canvas.renderAll();
+        },
+
         // change object color, width and dash array functionalities
         changeOpacity: (value: number) => {
             canvas.getActiveObjects().forEach((obj) => {
@@ -402,6 +433,30 @@ const buildEditor = ({
             return value as string;
         },
 
+        getActiveFontItalic: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return 'normal';
+
+            const value = selectedObject.get('fontStyle') || 'normal';
+            return value;
+        },
+
+        getActiveFontStrikethrough: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return false;
+
+            const value = selectedObject.get('linethrough') || false;
+            return value;
+        },
+
+        getActiveFontWeight: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return FontWeight;
+
+            const value = selectedObject.get('fontWeight') || FontWeight;
+            return value;
+        },
+
         getActiveOpacity: () => {
             const selectedObject = selectedObjects[0];
             if (!selectedObject) return 1;
@@ -467,11 +522,13 @@ const useEditor = () => {
             return buildEditor({
                 canvas,
                 fontFamily,
+                // fontWeight,
                 fillColor,
                 strokeColor,
                 strokeWidth,
                 strokeDashArray,
                 setFontFamily,
+                // setFontWeight,
                 setFillColor,
                 setStrokeColor,
                 setStrokeWidth,

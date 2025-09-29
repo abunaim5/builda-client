@@ -26,6 +26,7 @@ export type BuildEditorProps = {
     strokeDashArray: number[];
     selectedObjects: FabricObject[];
     setFontFamily: (value: string) => void;
+    // setFontWeight: (value: number) => void;
     setFillColor: (value: string) => void;
     setStrokeColor: (value: string) => void;
     setStrokeWidth: (value: number) => void;
@@ -49,6 +50,9 @@ export interface Editor {
 
     canvas: Canvas;
     getActiveFontFamily: () => string;
+    getActiveFontWeight: () => number;
+    getActiveFontItalic: () => string;
+    getActiveFontStrikethrough: () => boolean;
     getActiveOpacity: () => number;
     getActiveFillColor: () => string;
     getActiveStrokeColor: () => string;
@@ -57,6 +61,9 @@ export interface Editor {
     bringForward: () => void;
     sendBackwards: () => void;
     changeFontFamily: (value: string) => void;
+    changeFontWeight: (value: number) => void;
+    changeFontItalic: (value: string) => void;
+    changeFontStrikethrough: (value: boolean) => void;
     changeOpacity: (value: number) => void;
     changeFillColor: (value: string) => void;
     changeStrokeColor: (value: string) => void;
