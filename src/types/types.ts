@@ -49,6 +49,7 @@ export interface Editor {
 
     canvas: Canvas;
     getActiveFontFamily: () => string;
+    getActiveFontSize: () => number;
     getActiveFontWeight: () => number;
     getActiveFontItalic: () => string;
     getActiveFontUnderline: () => boolean;
@@ -63,6 +64,7 @@ export interface Editor {
     bringForward: () => void;
     sendBackwards: () => void;
     changeFontFamily: (value: string) => void;
+    changeFontSize: (value: number) => void;
     changeFontWeight: (value: number) => void;
     changeFontItalic: (value: string) => void;
     changeFontUnderline: (value: boolean) => void;

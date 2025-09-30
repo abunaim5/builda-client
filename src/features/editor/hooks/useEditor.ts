@@ -17,6 +17,7 @@ import {
     DiamondOptions,
     FillColor,
     FontFamily,
+    FontSize,
     FontWeight,
     HexagonOptions,
     PentagonOptions,
@@ -130,6 +131,14 @@ const buildEditor = ({
             canvas.renderAll();
         },
 
+        changeFontSize: (value: number) => {
+            canvas.getActiveObjects().forEach((obj) => {
+                if (isTextType(obj.type)) {
+                    obj.set({ fontSize: value });
+                }
+            });
+            canvas.renderAll();
+        },
 
         changeFontWeight: (value: number) => {
             canvas.getActiveObjects().forEach((obj) => {
@@ -458,6 +467,14 @@ const buildEditor = ({
 
             const value = selectedObject.get('fontFamily') || fontFamily;
             return value as string;
+        },
+
+        getActiveFontSize: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return FontSize;
+
+            const value = selectedObject.get('fontSize') || FontSize;
+            return value;
         },
 
         getActiveFontWeight: () => {

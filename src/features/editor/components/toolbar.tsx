@@ -13,8 +13,9 @@ import {
 import { cn } from "@/lib/utils";
 import Transparency from "./transparency";
 import { isTextType } from "../utils/utils";
-import { FontWeight } from "@/constants/constants";
+import { FontSize, FontWeight } from "@/constants/constants";
 import { useState } from "react";
+import FontSizeInput from "@/components/custom/font-size-input";
 
 interface ToolbarProps {
     editor: Editor | undefined;
@@ -23,8 +24,9 @@ interface ToolbarProps {
 };
 
 const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
-    const initFontWeight = editor?.getActiveFontWeight() || FontWeight;
     const initFontFamily = editor?.getActiveFontFamily();
+    const initFontSize = editor?.getActiveFontSize() || FontSize;
+    const initFontWeight = editor?.getActiveFontWeight() || FontWeight;
     const initFontItalic = editor?.getActiveFontItalic();
     const initFontUnderline = editor?.getActiveFontUnderline();
     const initFontStrikethrough = editor?.getActiveFontStrikethrough();
@@ -35,6 +37,7 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
     const initStrokeWidth = editor?.getActiveStrokeWidth();
     const [properties, setProperties] = useState({
         fontFamily: initFontFamily,
+        fontSize: initFontSize,
         fontWeight: initFontWeight,
         fontItalic: initFontItalic,
         fontUnderline: initFontUnderline,
@@ -45,11 +48,21 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
         strokeColor: initStrokeColor,
         strokeWidth: initStrokeWidth
     });
+    const selectedObject = editor?.selectedObjects[0];
     const selectedObjectType = editor?.selectedObjects[0]?.type;
     const isText = isTextType(selectedObjectType);
 
+    const onChangeFontSize = (value: number) => {
+        if (!selectedObject) return;
+
+        editor.changeFontSize(value);
+        setProperties((current) => ({
+            ...current,
+            fontSize: value
+        }));
+    };
+
     const handleToggleFontStyle = (style: 'bold' | 'italic' | 'underline' | 'strikethrough' | 'uppercase' | 'alignment') => {
-        const selectedObject = editor?.selectedObjects[0];
         if (!selectedObject) return;
 
         switch (style) {
@@ -123,12 +136,17 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
     return (
         <div className={cn('w-fit h-10 p-1 rounded-lg absolute top-1 left-1/2 transform -translate-x-1/2 z-[49] shadow-sm bg-white', editor?.selectedObjects.length !== 0 ? 'visible' : 'hidden')}>
             <div className='h-full flex items-center gap-x-2 shrink-0 overflow-x-auto'>
+
                 {isText && (
                     <CustomTooltip label='Font' side='bottom'>
                         <Button variant='outline' onClick={() => onchangeActiveTool('font')} className={cn('h-full', activeTool === 'font' && 'bg-gray-100')}>
                             {properties.fontFamily}
                         </Button>
                     </CustomTooltip>
+                )}
+
+                {isText && (
+                    <FontSizeInput value={properties.fontSize} onChange={onChangeFontSize} />
                 )}
 
                 <CustomTooltip label={isText ? 'Text color' : 'Color'} side='bottom'>
