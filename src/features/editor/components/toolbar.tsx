@@ -1,4 +1,16 @@
-import { BringToFront, Italic, Layers2, SendToBack, Strikethrough, TextAlignCenter, TextAlignEnd, TextAlignJustify, TextAlignStart, Underline } from "lucide-react";
+import {
+    BringToFront,
+    Italic,
+    Layers2,
+    SendToBack,
+    Strikethrough,
+    TextAlignCenter,
+    TextAlignEnd,
+    TextAlignJustify,
+    TextAlignStart,
+    Trash2,
+    Underline
+} from "lucide-react";
 import { RxBorderWidth } from "react-icons/rx";
 import { FaBold } from "react-icons/fa";
 import { ActiveTool, Editor } from "@/types/types";
@@ -261,9 +273,12 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                {/* <Separator orientation='vertical' /> */}
                 <Transparency editor={editor} />
-                {/* <Separator orientation='vertical' /> */}
+                <CustomTooltip label='Delete' side='bottom'>
+                    <Button variant='ghost' size='icon' onClick={() => editor?.deleteObj()} className='h-full'>
+                        <Trash2 className='size-5' />
+                    </Button>
+                </CustomTooltip>
             </div>
         </div>
     );

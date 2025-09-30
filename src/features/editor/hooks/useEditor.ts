@@ -244,6 +244,13 @@ const buildEditor = ({
             canvas.renderAll();
         },
 
+        // delete objects to the canvas
+        deleteObj: () => {
+            canvas.getActiveObjects().forEach((obj) => canvas.remove(obj));
+            canvas.discardActiveObject();
+            canvas.renderAll();
+        },
+
         // create and add text functionality
         addText: (value, options) => {
             const obj = new Textbox(value, {

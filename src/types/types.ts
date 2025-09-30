@@ -76,5 +76,6 @@ export interface Editor {
     changeStrokeColor: (value: string) => void;
     changeStrokeWidth: (value: number) => void;
     changeStrokeDashArray: (value: number[]) => void;
+    deleteObj: () => void;
     selectedObjects: FabricObject[];
 };
