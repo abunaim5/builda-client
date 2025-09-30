@@ -149,10 +149,37 @@ const buildEditor = ({
             canvas.renderAll();
         },
 
+        changeFontUnderline: (value: boolean) => {
+            canvas.getActiveObjects().forEach((obj) => {
+                if (isTextType(obj.type)) {
+                    obj.set({ underline: value });
+                }
+            });
+            canvas.renderAll();
+        },
+
         changeFontStrikethrough: (value: boolean) => {
             canvas.getActiveObjects().forEach((obj) => {
                 if (isTextType(obj.type)) {
                     obj.set({ linethrough: value });
+                }
+            });
+            canvas.renderAll();
+        },
+
+        changeTextTransform: (value: string) => {
+            canvas.getActiveObjects().forEach((obj) => {
+                if (isTextType(obj.type)) {
+                    obj.set({ textTransform: value });
+                }
+            });
+            canvas.renderAll();
+        },
+
+        changeTextAlign: (value: string) => {
+            canvas.getActiveObjects().forEach((obj) => {
+                if (isTextType(obj.type)) {
+                    obj.set({ textAlign: value });
                 }
             });
             canvas.renderAll();
@@ -433,11 +460,27 @@ const buildEditor = ({
             return value as string;
         },
 
+        getActiveFontWeight: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return FontWeight;
+
+            const value = selectedObject.get('fontWeight') || FontWeight;
+            return value;
+        },
+
         getActiveFontItalic: () => {
             const selectedObject = selectedObjects[0];
             if (!selectedObject) return 'normal';
 
             const value = selectedObject.get('fontStyle') || 'normal';
+            return value;
+        },
+
+        getActiveFontUnderline: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return false;
+
+            const value = selectedObject.get('underline') || false;
             return value;
         },
 
@@ -449,11 +492,19 @@ const buildEditor = ({
             return value;
         },
 
-        getActiveFontWeight: () => {
+        getActiveTextTransform: () => {
             const selectedObject = selectedObjects[0];
-            if (!selectedObject) return FontWeight;
+            if (!selectedObject) return 'none';
 
-            const value = selectedObject.get('fontWeight') || FontWeight;
+            const value = selectedObject.get('textTransform') || 'none';
+            return value as string;
+        },
+
+        getActiveTextAlign: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return 'left';
+
+            const value = selectedObject.get('textAlign') || 'left';
             return value;
         },
 

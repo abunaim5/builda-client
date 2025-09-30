@@ -1,4 +1,4 @@
-import { BringToFront, Italic, Layers2, SendToBack, Strikethrough, Underline } from "lucide-react";
+import { BringToFront, Italic, Layers2, SendToBack, Strikethrough, TextAlignCenter, TextAlignEnd, TextAlignJustify, TextAlignStart, Underline } from "lucide-react";
 import { RxBorderWidth } from "react-icons/rx";
 import { FaBold } from "react-icons/fa";
 import { ActiveTool, Editor } from "@/types/types";
@@ -26,7 +26,10 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
     const initFontWeight = editor?.getActiveFontWeight() || FontWeight;
     const initFontFamily = editor?.getActiveFontFamily();
     const initFontItalic = editor?.getActiveFontItalic();
+    const initFontUnderline = editor?.getActiveFontUnderline();
     const initFontStrikethrough = editor?.getActiveFontStrikethrough();
+    const initTextTransform = editor?.getActiveTextTransform();
+    const initTextAlign = editor?.getActiveTextAlign();
     const initFillColor = editor?.getActiveFillColor();
     const initStrokeColor = editor?.getActiveStrokeColor();
     const initStrokeWidth = editor?.getActiveStrokeWidth();
@@ -34,7 +37,10 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
         fontFamily: initFontFamily,
         fontWeight: initFontWeight,
         fontItalic: initFontItalic,
+        fontUnderline: initFontUnderline,
         fontStrikethrough: initFontStrikethrough,
+        textTransform: initTextTransform,
+        textAlign: initTextAlign,
         fillColor: initFillColor,
         strokeColor: initStrokeColor,
         strokeWidth: initStrokeWidth
@@ -42,7 +48,7 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
     const selectedObjectType = editor?.selectedObjects[0]?.type;
     const isText = isTextType(selectedObjectType);
 
-    const handleToggleFontStyle = (style: 'bold' | 'italic' | 'underline' | 'strikethrough') => {
+    const handleToggleFontStyle = (style: 'bold' | 'italic' | 'underline' | 'strikethrough' | 'uppercase' | 'alignment') => {
         const selectedObject = editor?.selectedObjects[0];
         if (!selectedObject) return;
 
@@ -65,12 +71,45 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                 }));
                 break;
             }
+            case 'underline': {
+                const newVal = properties.fontUnderline ? false : true;
+                editor.changeFontUnderline(newVal);
+                setProperties((current) => ({
+                    ...current,
+                    fontUnderline: newVal
+                }));
+                break;
+            }
             case 'strikethrough': {
-                const newVal = properties.fontStrikethrough === true ? false : true;
+                const newVal = properties.fontStrikethrough ? false : true;
                 editor.changeFontStrikethrough(newVal);
                 setProperties((current) => ({
                     ...current,
                     fontStrikethrough: newVal
+                }));
+                break;
+            }
+            case 'uppercase': {
+                const newVal = properties.textTransform === 'uppercase' ? 'none' : 'uppercase';
+                editor.changeTextTransform(newVal);
+                setProperties((current) => ({
+                    ...current,
+                    textTransform: newVal
+                }));
+                break;
+            }
+            case 'alignment': {
+                const newVal = properties.textAlign === 'left'
+                    ? 'center'
+                    : properties.textAlign === 'center'
+                        ? 'justify'
+                        : properties.textAlign === 'justify'
+                            ? 'right'
+                            : 'left';
+                editor.changeTextAlign(newVal);
+                setProperties((current) => ({
+                    ...current,
+                    textAlign: newVal
                 }));
                 break;
             }
@@ -127,9 +166,43 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                 )}
 
                 {isText && (
+                    <CustomTooltip label='Underline' side='bottom'>
+                        <Button variant='ghost' size='icon' onClick={() => handleToggleFontStyle('underline')} className={cn('h-full', properties.fontUnderline && 'bg-gray-100')}>
+                            <Underline className='size-5' />
+                        </Button>
+                    </CustomTooltip>
+                )}
+
+                {isText && (
                     <CustomTooltip label='Strikethrough' side='bottom'>
-                        <Button variant='ghost' size='icon' onClick={() => handleToggleFontStyle('strikethrough')} className={cn('h-full', properties.fontStrikethrough === true && 'bg-gray-100')}>
+                        <Button variant='ghost' size='icon' onClick={() => handleToggleFontStyle('strikethrough')} className={cn('h-full', properties.fontStrikethrough && 'bg-gray-100')}>
                             <Strikethrough className='size-5' />
+                        </Button>
+                    </CustomTooltip>
+                )}
+
+                {isText && (
+                    <CustomTooltip label='Uppercase' side='bottom'>
+                        <Button variant='ghost' size='icon' onClick={() => handleToggleFontStyle('uppercase')} className={cn('h-full text-lg', properties.textTransform === 'uppercase' && 'bg-gray-100')}>
+                            aA
+                        </Button>
+                    </CustomTooltip>
+                )}
+
+                {isText && (
+                    <CustomTooltip label='Alignment' side='bottom'>
+                        <Button variant='ghost' size='icon' onClick={() => handleToggleFontStyle('alignment')} className={cn('h-full')}>
+                            {
+                                properties.textAlign === 'left'
+                                    ? <TextAlignStart className='size-5' />
+                                    : properties.textAlign === 'center'
+                                        ? <TextAlignCenter className='size-5' />
+                                        : properties.textAlign === 'justify'
+                                            ? <TextAlignJustify className='size-5' />
+                                            : properties.textAlign === 'right'
+                                                ? <TextAlignEnd className='size-5' />
+                                                : <TextAlignStart className='size-5' />
+                            }
                         </Button>
                     </CustomTooltip>
                 )}
