@@ -10,7 +10,7 @@ import {
     Shadow,
     Textbox,
     Triangle,
-    util
+    util,
 } from 'fabric';
 import {
     ArrowOptions,
@@ -38,7 +38,7 @@ import {
     createRegularPolygon,
     createStar
 } from "../utils/shape-factory";
-import { isTextType } from "../utils/utils";
+import { isFabricText, isTextType } from "../utils/utils";
 import useAutoResize from "./useAutoResize";
 import useCanvasEvents from "./useCanvasEvents";
 
@@ -179,10 +179,15 @@ const buildEditor = ({
 
         changeTextTransform: (value: string) => {
             canvas.getActiveObjects().forEach((obj) => {
-                if (isTextType(obj.type)) {
-                    // obj.set({ textTransform: value });
-                    util.string.capitalize(obj._text[1], true)
-                    console.log(obj);
+                if (isFabricText(obj)) {
+                    if (value === 'uppercase') {
+                        const capitalizeText = obj.text.toUpperCase();
+                        obj.set({ 'text': capitalizeText });
+                    } else {
+                        // This "false" method returns only the first letter capitalized and other letter converted to lowercase
+                        const normalText = util.string.capitalize(obj.text, false);
+                        obj.set({ 'text': normalText });
+                    }
                 }
             });
             canvas.renderAll();
