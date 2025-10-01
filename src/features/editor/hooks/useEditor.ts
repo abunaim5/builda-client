@@ -9,7 +9,8 @@ import {
     Rect,
     Shadow,
     Textbox,
-    Triangle
+    Triangle,
+    util
 } from 'fabric';
 import {
     ArrowOptions,
@@ -179,7 +180,9 @@ const buildEditor = ({
         changeTextTransform: (value: string) => {
             canvas.getActiveObjects().forEach((obj) => {
                 if (isTextType(obj.type)) {
-                    obj.set({ textTransform: value });
+                    // obj.set({ textTransform: value });
+                    util.string.capitalize(obj._text[1], true)
+                    console.log(obj);
                 }
             });
             canvas.renderAll();
