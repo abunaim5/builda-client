@@ -14,6 +14,7 @@ import StrokeWidthSidebar from "./stroke-width-sidebar";
 import TextSidebar from "./text-sidebar";
 import { isTextType } from "../utils/utils";
 import FontSidebar from "./font-sidebar";
+import ImageSidebar from "./image-sidebar";
 
 const Editor = () => {
     const { init, editor } = useEditor();
@@ -68,6 +69,11 @@ const Editor = () => {
                     editor={editor}
                 />
                 <FontSidebar
+                    activeTool={activeTool}
+                    onChangeActiveTool={onChangeActiveTool}
+                    editor={editor}
+                />
+                <ImageSidebar
                     activeTool={activeTool}
                     onChangeActiveTool={onChangeActiveTool}
                     editor={editor}
