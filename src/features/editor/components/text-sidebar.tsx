@@ -19,7 +19,7 @@ const TextSidebar = ({ activeTool, editor, onChangeActiveTool }: TextSidebarProp
     };
 
     return (
-        <aside className={cn('w-[360px] relative', activeTool === 'text' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] h-full relative border-r z-40', activeTool === 'text' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Text' description='Add text in canvas' />
             <ScrollArea>
                 <div className='p-4 space-y-4'>

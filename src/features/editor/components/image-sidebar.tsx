@@ -22,7 +22,7 @@ const ImageSidebar = ({ activeTool, editor, onChangeActiveTool }: ImageSidebarPr
     };
 
     return (
-        <aside className={cn('w-[360px] relative border-r z-40 flex flex-col', activeTool === 'images' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] h-full relative border-r z-40', activeTool === 'images' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Images' description='Add images in canvas' />
             {
                 isLoading && (<div className='flex items-center justify-center flex-1'>
@@ -35,7 +35,7 @@ const ImageSidebar = ({ activeTool, editor, onChangeActiveTool }: ImageSidebarPr
                     <p className='text-xs text-muted-foreground'>Failed to fetch images</p>
                 </div>)
             }
-            <ScrollArea className='h-full'>
+            <ScrollArea className='overflow-auto'>
                 <div className='p-4'>
                     <div className='grid grid-cols-2 gap-4'>
                         {data && data.map((image) => {

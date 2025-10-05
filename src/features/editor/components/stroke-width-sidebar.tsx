@@ -32,7 +32,7 @@ const StrokeWidthSidebar = ({ activeTool, editor, onChangeActiveTool }: StrokeWi
     };
 
     return (
-        <aside className={cn('w-[360px] relative', activeTool === 'stroke-width' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] h-full relative border-r z-40', activeTool === 'stroke-width' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Stroke styles' description='Change the stroke weight and styles' />
             <ScrollArea>
                 <div className='p-4 space-y-4 border-b'>

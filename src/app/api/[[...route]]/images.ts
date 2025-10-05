@@ -1,7 +1,7 @@
 import { unsplash } from '@/lib/unsplash';
 import { Hono } from 'hono';
 
-const DefaultCount = 50;
+const DefaultCount = 20;
 const DefaultCollectionIDS = ['317099'];
 
 const app = new Hono()
