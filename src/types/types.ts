@@ -33,6 +33,7 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+    addImage: (value: string) => void;
     addText: (value: string, options?: Partial<ITextProps>) => void;
     addCircle: () => void;
     addRectangle: () => void;

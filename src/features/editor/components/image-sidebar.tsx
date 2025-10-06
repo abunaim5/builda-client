@@ -38,16 +38,16 @@ const ImageSidebar = ({ activeTool, editor, onChangeActiveTool }: ImageSidebarPr
             <ScrollArea className='overflow-auto'>
                 <div className='p-4'>
                     <div className='grid grid-cols-2 gap-4'>
-                        {data && data.map((image) => {
+                        {data && data.map((img) => {
                             return (
-                                <button key={image.id} className='w-full h-[100px] relative group hover:opacity-75 transition rounded-sm overflow-hidden border bg-muted'>
+                                <button key={img.id} onClick={() => editor?.addImage(img.urls.regular)} className='w-full h-[100px] relative group hover:opacity-75 transition rounded-sm overflow-hidden border bg-muted'>
                                     <Image
                                         fill
-                                        src={image.urls.small}
-                                        alt={image.alt_description || 'Image'}
+                                        src={img.urls.small}
+                                        alt={img.alt_description || 'Image'}
                                         className='object-cover'
                                     />
-                                    <Link href={image.links.html} target='_blank' className='opacity-0 group-hover:opacity-100 absolute left-0 bottom-0 w-full text-xs truncate text-left hover:underline p-1 text-white bg-black/50'>{image.user.name}</Link>
+                                    <Link href={img.links.html} target='_blank' className='opacity-0 group-hover:opacity-100 absolute left-0 bottom-0 w-full text-xs truncate text-left hover:underline p-1 text-white bg-black/50'>{img.user.name}</Link>
                                 </button>
                             )
                         })}

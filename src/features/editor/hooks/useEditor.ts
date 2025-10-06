@@ -3,6 +3,7 @@ import { BuildEditorProps, Editor } from "@/types/types";
 import {
     Canvas,
     Circle,
+    FabricImage,
     FabricObject,
     InteractiveFabricObject,
     Polygon,
@@ -257,6 +258,23 @@ const buildEditor = ({
             canvas.getActiveObjects().forEach((obj) => canvas.remove(obj));
             canvas.discardActiveObject();
             canvas.renderAll();
+        },
+
+        addImage: async (value: string) => {
+            const workspace = getWorkspace();
+            if (!workspace) return;
+
+            try {
+                const img = await FabricImage.fromURL(value);
+                if (!img) return;
+
+                img.scaleToWidth(workspace?.width || 0);
+                img.scaleToHeight(workspace?.height || 0);
+
+                addToCanvas(img);
+            } catch (err) {
+                console.error('Error loading image:', err);
+            }
         },
 
         // create and add text functionality
