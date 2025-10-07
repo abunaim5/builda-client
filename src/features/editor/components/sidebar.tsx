@@ -1,6 +1,7 @@
 import SidebarItem from "@/components/custom/sidebar-item";
 import { ActiveTool } from "@/types/types";
 import { ImageIcon, LayoutTemplate, Settings, Shapes, Sparkles, Type } from "lucide-react";
+import { FiUploadCloud } from "react-icons/fi";
 
 interface SidebarProps {
     activeTool: ActiveTool;
@@ -14,6 +15,7 @@ const Sidebar = ({ activeTool, onChangeActiveTool }: SidebarProps) => {
                 <SidebarItem icon={LayoutTemplate} label='Design' isActive={activeTool === 'templates'} onClick={() => onChangeActiveTool('templates')} />
                 <SidebarItem icon={Shapes} label='Shapes' isActive={activeTool === 'shapes'} onClick={() => onChangeActiveTool('shapes')} />
                 <SidebarItem icon={Type} label='Text' isActive={activeTool === 'text'} onClick={() => onChangeActiveTool('text')} />
+                <SidebarItem icon={FiUploadCloud} label='Uploads' isActive={activeTool === 'uploads'} onClick={() => onChangeActiveTool('uploads')} />
                 <SidebarItem icon={ImageIcon} label='Image' isActive={activeTool === 'images'} onClick={() => onChangeActiveTool('images')} />
                 <SidebarItem icon={Sparkles} label='AI' isActive={activeTool === 'ai'} onClick={() => onChangeActiveTool('ai')} />
                 <SidebarItem icon={Settings} label='Settings' isActive={activeTool === 'settings'} onClick={() => onChangeActiveTool('settings')} />

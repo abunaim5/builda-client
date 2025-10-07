@@ -15,7 +15,8 @@ export type ActiveTool =
     | 'settings'
     | 'ai'
     | 'templates'
-    | 'remove-bg';
+    | 'remove-bg'
+    | 'uploads';
 
 export type BuildEditorProps = {
     canvas: Canvas;
