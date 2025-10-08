@@ -26,6 +26,7 @@ const UploadsSidebar = ({ activeTool, editor, onChangeActiveTool }: UploadsSideb
                 <UploadButton
                     endpoint='imageUploader'
                     onClientUploadComplete={(res) => {
+                        console.log(res)
                         editor?.addImage(res[0].ufsUrl)
                     }}
                     appearance={{
