@@ -143,7 +143,7 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
         }
     };
 
-    // if (editor?.selectedObjects.length === 0) return (<></>);
+    if (editor?.selectedObjects.length === 0) return (<></>);
 
     return (
         <div className={cn('w-fit h-10 p-1 rounded-lg absolute top-1 left-1/2 transform -translate-x-1/2 z-[49] shadow-sm bg-white', editor?.selectedObjects.length !== 0 ? 'visible' : 'hidden')}>

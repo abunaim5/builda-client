@@ -1,11 +1,11 @@
+'use client'
 import ToolSidebarClose from "@/components/custom/tool-sidebar-close";
 import ToolSidebarHeader from "@/components/custom/tool-sidebar-header";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ActiveTool, Editor } from "@/types/types";
 import { cn } from "@/lib/utils";
-import { UploadButton } from "@/utils/uploadthing";
-import { twMerge } from "tailwind-merge";
-import "@uploadthing/react/styles.css";
+import { UploadButton } from "@/lib/uploadthing";
+// import { twMerge } from "tailwind-merge";
 
 interface UploadsSidebarProps {
     editor: Editor | undefined;
@@ -29,13 +29,14 @@ const UploadsSidebar = ({ activeTool, editor, onChangeActiveTool }: UploadsSideb
                         editor?.addImage(res[0].ufsUrl)
                     }}
                     appearance={{
-                        button: 'w-full text-sm font-medium',
-                        allowedContent: 'hidden'
+                        button: 'w-full text-sm font-medium bg-blue-600 text-white hover:bg-blue-700',
+                        allowedContent: 'hidden',
                     }}
                     content={{
-                        button: 'Upload images'
+                        button: 'Upload images',
+                        allowedContent: ''
                     }}
-                    config={{ cn: twMerge }}
+                    // config={{ cn: twMerge }}
                 />
             </div>
             <ScrollArea className='overflow-auto'>
