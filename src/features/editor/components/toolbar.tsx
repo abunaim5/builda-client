@@ -11,6 +11,7 @@ import {
     Trash2,
     Underline
 } from "lucide-react";
+import { TbColorFilter } from 'react-icons/tb';
 import { RxBorderWidth } from "react-icons/rx";
 import { FaBold } from "react-icons/fa";
 import { ActiveTool, Editor } from "@/types/types";
@@ -63,6 +64,7 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
     const selectedObject = editor?.selectedObjects[0];
     const selectedObjectType = editor?.selectedObjects[0]?.type;
     const isText = isTextType(selectedObjectType);
+    const isImage = selectedObjectType === 'image';
 
     const onChangeFontSize = (value: number) => {
         if (!selectedObject) return;
@@ -161,7 +163,7 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                     <FontSizeInput value={properties.fontSize} onChange={onChangeFontSize} />
                 )}
 
-                <CustomTooltip label={isText ? 'Text color' : 'Color'} side='bottom'>
+                {!isImage && (<CustomTooltip label={isText ? 'Text color' : 'Color'} side='bottom'>
                     <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('fill')} className={cn('h-full', activeTool === 'fill' && 'bg-gray-100')}>
                         {
                             isText ? (<div className='flex flex-col items-center justify-center'>
@@ -177,7 +179,7 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                         }
 
                     </Button>
-                </CustomTooltip>
+                </CustomTooltip>)}
 
                 {isText && (
                     <CustomTooltip label='Bold' side='bottom'>
@@ -252,6 +254,14 @@ const Toolbar = ({ editor, activeTool, onchangeActiveTool }: ToolbarProps) => {
                     <CustomTooltip label='Stroke style' side='bottom'>
                         <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('stroke-width')} className={cn('h-full', activeTool === 'stroke-width' && 'bg-gray-100')}>
                             <RxBorderWidth className='size-5' />
+                        </Button>
+                    </CustomTooltip>
+                )}
+
+                {isImage && (
+                    <CustomTooltip label='Filters' side='bottom'>
+                        <Button variant='ghost' size='icon' onClick={() => onchangeActiveTool('filter')} className={cn('h-full', activeTool === 'filter' && 'bg-gray-100')}>
+                            <TbColorFilter className='size-5' />
                         </Button>
                     </CustomTooltip>
                 )}

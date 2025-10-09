@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ActiveTool, Editor } from "@/types/types";
 import { cn } from "@/lib/utils";
 import { UploadButton } from "@/lib/uploadthing";
-// import { twMerge } from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 
 interface UploadsSidebarProps {
     editor: Editor | undefined;
@@ -30,14 +30,18 @@ const UploadsSidebar = ({ activeTool, editor, onChangeActiveTool }: UploadsSideb
                         editor?.addImage(res[0].ufsUrl)
                     }}
                     appearance={{
-                        button: 'w-full text-sm font-medium bg-blue-600 text-white hover:bg-blue-700',
+                        button: 'w-full text-sm font-medium',
                         allowedContent: 'hidden',
                     }}
                     content={{
                         button: 'Upload images',
                         allowedContent: ''
                     }}
-                    // config={{ cn: twMerge }}
+                    onUploadError={(error: Error) => {
+                        console.error(`ERROR! ${error.message}`);
+                    }}
+                    config={{ cn: twMerge }}
+                    className='ut-button:bg-[#0F52FF] hover:ut-button:bg-blue-700 ut-button:ut-readying:bg-[#0F52FF]/50'
                 />
             </div>
             <ScrollArea className='overflow-auto'>
