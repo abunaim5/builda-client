@@ -50,7 +50,33 @@ export const fonts = [
     'Times New Roman',
     'Trebuchet MS',
     'Verdana'
-]
+];
+
+export const filters = [
+    'none',
+    'polaroid',
+    'sepia',
+    'kodachrome',
+    'contrast',
+    'brightness',
+    'greyscale',
+    'brownie',
+    'vintage',
+    'technicolor',
+    'pixelate',
+    'invert',
+    'blur',
+    'sharpen',
+    'emboss',
+    'removecolor',
+    'black&white',
+    'vibrance',
+    'blendcolor',
+    'huerotate',
+    'resize',
+    'saturation',
+    'gamma'
+];
 
 export const FontFamily = 'Arial';
 export const FontSize = 24;

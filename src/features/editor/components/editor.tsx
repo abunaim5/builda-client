@@ -16,6 +16,7 @@ import { isTextType } from "../utils/utils";
 import FontSidebar from "./font-sidebar";
 import ImageSidebar from "./image-sidebar";
 import UploadsSidebar from "./uploads-sidebar";
+import FilterSidebar from "./filter-sidebar";
 
 const Editor = () => {
     const { init, editor } = useEditor();
@@ -80,6 +81,11 @@ const Editor = () => {
                     editor={editor}
                 />
                 <ImageSidebar
+                    activeTool={activeTool}
+                    onChangeActiveTool={onChangeActiveTool}
+                    editor={editor}
+                />
+                <FilterSidebar
                     activeTool={activeTool}
                     onChangeActiveTool={onChangeActiveTool}
                     editor={editor}

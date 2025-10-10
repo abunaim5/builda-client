@@ -39,7 +39,7 @@ import {
     createRegularPolygon,
     createStar
 } from "../utils/shape-factory";
-import { isFabricText, isTextType } from "../utils/utils";
+import { createFilter, isFabricText, isTextType } from "../utils/utils";
 import useAutoResize from "./useAutoResize";
 import useCanvasEvents from "./useCanvasEvents";
 
@@ -253,6 +253,21 @@ const buildEditor = ({
             canvas.renderAll();
         },
 
+        changeImageFilter: (value: string) => {
+            const objects = canvas.getActiveObjects();
+            objects.forEach((obj) => {
+                if (obj.type === 'image') {
+                    const imageObj = obj as FabricImage;
+
+                    const effect = createFilter(value);
+
+                    imageObj.filters = effect ? [effect] : [];
+                    imageObj.applyFilters();
+                    canvas.renderAll();
+                }
+            });
+        },
+
         // delete objects to the canvas
         deleteObj: () => {
             canvas.getActiveObjects().forEach((obj) => canvas.remove(obj));
@@ -265,7 +280,9 @@ const buildEditor = ({
             if (!workspace) return;
 
             try {
-                const img = await FabricImage.fromURL(value);
+                const img = await FabricImage.fromURL(value, {
+                    crossOrigin: 'anonymous'
+                });
                 if (!img) return;
 
                 img.scaleToWidth(workspace?.width || 0);
@@ -563,6 +580,14 @@ const buildEditor = ({
             if (!selectedObject) return 1;
 
             const value = selectedObject.get('opacity') || 1;
+            return value;
+        },
+
+        getActiveFilters: () => {
+            const selectedObject = selectedObjects[0];
+            if (!selectedObject) return [];
+
+            const value = selectedObject.get('filters') || [];
             return value;
         },
 

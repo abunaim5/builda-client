@@ -63,6 +63,7 @@ export interface Editor {
     getActiveStrokeColor: () => string;
     getActiveStrokeWidth: () => number;
     getActiveStrokeDashArray: () => number[];
+    getActiveFilters: () => string[];
     bringForward: () => void;
     sendBackwards: () => void;
     changeFontFamily: (value: string) => void;
@@ -78,6 +79,7 @@ export interface Editor {
     changeStrokeColor: (value: string) => void;
     changeStrokeWidth: (value: number) => void;
     changeStrokeDashArray: (value: number[]) => void;
+    changeImageFilter: (value: string) => void;
     deleteObj: () => void;
     selectedObjects: FabricObject[];
 };
