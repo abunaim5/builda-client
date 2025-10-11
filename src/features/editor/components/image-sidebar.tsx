@@ -22,7 +22,7 @@ const ImageSidebar = ({ activeTool, editor, onChangeActiveTool }: ImageSidebarPr
     };
 
     return (
-        <aside className={cn('w-[360px] h-full relative border-r z-40', activeTool === 'images' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] flex flex-col relative border-r z-40 h-[calc(100vh-56px)]', activeTool === 'images' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Images' description='Add images in canvas' />
             {
                 isLoading && (<div className='flex items-center justify-center flex-1'>
