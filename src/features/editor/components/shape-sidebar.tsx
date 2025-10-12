@@ -23,9 +23,9 @@ const ShapeSidebar = ({ activeTool, editor, onChangeActiveTool }: ShapeSidebarPr
     };
 
     return (
-        <aside className={cn('w-[360px] h-full relative border-r z-40', activeTool === 'shapes' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] flex flex-col relative border-r z-40 max-h-[calc(100vh-56px)]', activeTool === 'shapes' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Shapes' description='Add shapes in canvas' />
-            <ScrollArea>
+            <ScrollArea className='overflow-auto'>
                 <div className='grid grid-cols-3 gap-4 p-4'>
                     <ShapeTool onClick={() => editor?.addRectangle()} icon={IoSquareSharp} />
                     <ShapeTool onClick={() => editor?.addRoundRectangle()} icon={FaSquare} />

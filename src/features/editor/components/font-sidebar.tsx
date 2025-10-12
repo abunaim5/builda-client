@@ -20,7 +20,7 @@ const FontSidebar = ({ activeTool, editor, onChangeActiveTool }: FontSidebarProp
     };
 
     return (
-        <aside className={cn('w-[360px] h-full relative z-40 border-r', activeTool === 'font' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] flex flex-col relative border-r z-40 max-h-[calc(100vh-56px)]', activeTool === 'font' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Font' description='Change font family' />
             <ScrollArea className='overflow-auto'>
                 <div className='p-4 space-y-1'>

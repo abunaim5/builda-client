@@ -20,9 +20,9 @@ const FilterSidebar = ({ activeTool, editor, onChangeActiveTool }: FilterSidebar
     };
 
     return (
-        <aside className={cn('w-[360px] h-full relative z-40 border-r', activeTool === 'filter' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] flex flex-col relative border-r z-40 max-h-[calc(100vh-56px)]', activeTool === 'filter' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Filters' description='Apply filters to images' />
-            <ScrollArea className=''>
+            <ScrollArea className='overflow-auto'>
                 <div className='p-4 space-y-1'>
                     {filters.map((filter, idx) => <Button
                         key={idx}
@@ -30,7 +30,8 @@ const FilterSidebar = ({ activeTool, editor, onChangeActiveTool }: FilterSidebar
                         onClick={() => editor?.changeImageFilter(filter)}
                         className={cn('w-full text-left justify-start rounded-none', filterVal[0] === filter && 'bg-gray-100')}
                     >
-                        {filter}
+                        {/* Uppercase the first letter */}
+                        {filter.charAt(0).toUpperCase() + filter.slice(1)}
                     </Button>)}
                 </div>
             </ScrollArea>

@@ -25,7 +25,7 @@ const FillColorSidebar = ({ isText, activeTool, editor, onChangeActiveTool }: Fi
     };
 
     return (
-        <aside className={cn('w-[360px] h-full relative border-r z-40', activeTool === 'fill' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] flex flex-col relative border-r z-40 max-h-[calc(100vh-56px)]', activeTool === 'fill' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title={isText ? 'Text color' : 'Color'} description={isText ? 'Add text color' : 'Add fill color in elements'} />
             <ScrollArea>
                 <div className='p-4'>

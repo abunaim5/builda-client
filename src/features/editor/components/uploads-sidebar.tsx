@@ -20,7 +20,7 @@ const UploadsSidebar = ({ activeTool, editor, onChangeActiveTool }: UploadsSideb
     };
 
     return (
-        <aside className={cn('w-[360px] h-full relative border-r z-40', activeTool === 'uploads' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] flex flex-col relative border-r z-40 max-h-[calc(100vh-56px)]', activeTool === 'uploads' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Files' description='Your uploaded files' />
             <div className='p-4 border-b'>
                 <UploadButton

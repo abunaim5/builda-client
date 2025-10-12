@@ -19,9 +19,9 @@ const TextSidebar = ({ activeTool, editor, onChangeActiveTool }: TextSidebarProp
     };
 
     return (
-        <aside className={cn('w-[360px] h-full relative border-r z-40', activeTool === 'text' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] flex flex-col relative border-r z-40 max-h-[calc(100vh-56px)]', activeTool === 'text' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Text' description='Add text in canvas' />
-            <ScrollArea>
+            <ScrollArea className='overflow-auto'>
                 <div className='p-4 space-y-4'>
                     <Button
                         onClick={() => editor?.addText('Your paragraph text')}

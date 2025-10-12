@@ -19,9 +19,9 @@ const AiSidebar = ({ activeTool, editor, onChangeActiveTool }: AiSidebarProps) =
     };
 
     return (
-        <aside className={cn('w-[360px] h-full relative border-r z-40', activeTool === 'ai' ? 'visible' : 'hidden')}>
+        <aside className={cn('w-[360px] flex flex-col relative border-r z-40 max-h-[calc(100vh-56px)]', activeTool === 'ai' ? 'visible' : 'hidden')}>
             <ToolSidebarHeader title='Ai' description='Generate an image using AI' />
-            <ScrollArea>
+            <ScrollArea className='overflow-auto'>
                 <form className='p-4 space-y-6'>
                     <Textarea
                         placeholder='Write something...'
